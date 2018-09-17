@@ -1,0 +1,95 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Search API for a collection of documents
+Parameters:
+  TargetBucket:
+    Description: Name of S3 bucket where documents should be uploaded (Note - make this bucket before you deploy!)
+    Type: String
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 256
+
+Resources:
+  DocumentSearchFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: document_search
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          BUCKET_NAME: !Ref TargetBucket
+      Policies:
+        - Statement:
+            - Action:
+                - s3:GetObject
+                - s3:ListBucket
+                - s3:GetBucketLocation
+                - s3:GetObjectVersion
+                - s3:PutObject
+              Resource:
+                - Fn::Sub:
+                    - arn:${AWS::Partition}:s3:::${bucketName}
+                    - bucketName:
+                        Ref: TargetBucket
+                - Fn::Sub:
+                    - arn:${AWS::Partition}:s3:::${bucketName}/*
+                    - bucketName:
+                        Ref: TargetBucket
+              Effect: Allow
+      Events:
+        DocumentSearch:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /search
+            Method: GET
+        DocumentUpload:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /add
+            Method: ANY
+        SearchConfiguration:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /internal/config
+            Method: ANY
+  DocumentIndexingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: document_indexer
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Policies: AWSLambdaExecute
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          BUCKET_NAME: !Ref TargetBucket
+    Events:
+      DocumentAddedEvent:
+        Type: S3
+        Properties:
+          Bucket: !Ref SearchDocumentsBucket
+          Events: s3:ObjectCreated:*
+  SearchDocumentsBucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: !Ref TargetBucket
+
+Outputs:
+  DocumentSearchApi:
+    Description: "API Gateway endpoint URL for Prod stage for Document Search function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/search/"
+
+  DocumentSearchFunction:
+    Description: "Serverless Document Search Function ARN"
+    Value: !GetAtt DocumentSearchFunction.Arn
+
+  DocumentCollectionBucket:
+    Description: "S3 Bucket for All uploaded documents, index information and database"
+    Value: !GetAtt DocumentSearchFunction.Arn
+
+  DocumentSearchFunctionIamRole:
+    Description: "Implicit IAM Role created for Document Search function"
+    Value: !GetAtt DocumentSearchFunction.Arn

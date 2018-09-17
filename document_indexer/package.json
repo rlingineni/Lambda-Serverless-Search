@@ -1,0 +1,14 @@
+{
+  "name": "document_indexer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lunr": "^2.3.3"
+  }
+}
