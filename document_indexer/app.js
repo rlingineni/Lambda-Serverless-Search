@@ -4,20 +4,41 @@ const s3 = new AWS.S3();
 let BUCKET_NAME;
 
 exports.lambdaHandler = async (event, context) => {
-	process.env.BUCKET_NAME = "citycontacts";
 	BUCKET_NAME = process.env.BUCKET_NAME;
 
-	let IndexConfig = {
-		fields: ["title", "director", "year"],
-		ref: "title"
-	};
+	let AddedItem = event.Records[0].s3.object.key;
+
+	switch (AddedItem) {
+		case "articles_all.json":
+			return;
+		case "search_config.json":
+			return;
+		case "search_index.json":
+			return;
+	}
+
+	/*
+	//don't run function if it is not s3
+	if (event.Records[0].s3.object.key === "articles_all.json") {
+		return;
+	}
+
+	//don't run function if it is not s3
+	if (event.Records[0].s3.object.key === "search_config.json") {
+		return;
+	}
+
+	//don't run function if it is not s3
+	if (event.Records[0].s3.object.key === "search_index.json") {
+		return;
+	}*/
 
 	//fetch index configuration from S3
 	let SearchConfig = await getJSONFile(BUCKET_NAME, "search_config.json");
 	if (SearchConfig != null) {
 		IndexConfig = SearchConfig;
 	} else {
-		return "Please set the Search Index Configuration";
+		return "Please set the Search Index Configuration before adding documents";
 	}
 
 	//fetch previous cache of documents
@@ -54,13 +75,15 @@ exports.lambdaHandler = async (event, context) => {
 		}, this);
 	});
 
+	/*
+		Keep this document for reference, but it will be used just in case
+	*/
 	//update "alldocs.json"
 	await uploadToS3(BUCKET_NAME, "articles_all.json", JSON.stringify(AllArticles));
 	console.log("Uploaded all articles back!");
 
 	await uploadToS3(BUCKET_NAME, "search_index.json", JSON.stringify(index));
 	console.log("Uploaded index!");
-	//mark raw documents for deletion
 };
 
 /**

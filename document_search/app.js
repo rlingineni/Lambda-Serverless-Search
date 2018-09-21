@@ -53,7 +53,6 @@ let BUCKET_NAME;
  *
  */
 exports.lambdaHandler = async (event, context) => {
-	process.env.BUCKET_NAME = "citycontacts";
 	BUCKET_NAME = process.env.BUCKET_NAME;
 
 	let path = event.path;
@@ -175,7 +174,7 @@ async function SearchForDocument(query) {
 	} catch (err) {
 		console.log(err.message);
 		console.log("Search Index cannot be found");
-		return "No Search Index has been found";
+		return "No Search Index was found. Make sure you have set up an index and added documents";
 	}
 }
 

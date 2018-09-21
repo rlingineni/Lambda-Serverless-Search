@@ -30,6 +30,8 @@ Resources:
                 - s3:GetBucketLocation
                 - s3:GetObjectVersion
                 - s3:PutObject
+                - s3:GetLifecycleConfiguration
+                - s3:PutLifecycleConfiguration
               Resource:
                 - Fn::Sub:
                     - arn:${AWS::Partition}:s3:::${bucketName}
@@ -66,6 +68,24 @@ Resources:
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           BUCKET_NAME: !Ref TargetBucket
+      Policies:
+      - Statement:
+          - Action:
+              - s3:GetObject
+              - s3:ListBucket
+              - s3:PutObject
+              - s3:GetLifecycleConfiguration
+              - s3:PutLifecycleConfiguration
+            Resource:
+              - Fn::Sub:
+                  - arn:${AWS::Partition}:s3:::${bucketName}
+                  - bucketName:
+                      Ref: TargetBucket
+              - Fn::Sub:
+                  - arn:${AWS::Partition}:s3:::${bucketName}/*
+                  - bucketName:
+                      Ref: TargetBucket
+            Effect: Allow
     Events:
       DocumentAddedEvent:
         Type: S3
@@ -76,6 +96,18 @@ Resources:
     Type: "AWS::S3::Bucket"
     Properties:
       BucketName: !Ref TargetBucket
+      NotificationConfiguration:
+        LambdaConfigurations:
+          - Event: "s3:ObjectCreated:*"
+            Function: !GetAtt DocumentIndexingFunction.Arn
+  BucketPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: "lambda:InvokeFunction"
+      FunctionName: !GetAtt DocumentIndexingFunction.Arn
+      Principal: s3.amazonaws.com
+      SourceAccount: !Ref "AWS::AccountId"
+      SourceArn: !Sub "arn:aws:s3:::${TargetBucket}"
 
 Outputs:
   DocumentSearchApi:
