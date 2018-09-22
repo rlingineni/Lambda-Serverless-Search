@@ -4,13 +4,9 @@ I love elasticsearch. I love serverless functions. But I love serverless functio
 
 The search algorithm powering the system is [lunrjs](http://lunrjs.com).
 
-## Architecture
-![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/Architecture.png)
-
-
 ## Getting Started
 
-You may head over to the [Serverless Application Repository](sss) now and deploy the service.
+You may head over to the [Serverless Application Repository](sss) and deploy the service.
 
 You will have to provide two parameters when you deploy:
 
@@ -19,14 +15,13 @@ You will have to provide two parameters when you deploy:
 
 `InternalAPIKey` - This API Key is a secret string. Do not share this key with anyone, it will allow you to change your index configuration
 
-You may use this [postman collection](Postman) and test set up your API routes.
+You may use this [postman collection](Postman) and test the API routes. Make sure to change the URL. Read below for route docs and design.
 
 ### API Routes
 
 After you deploy, you will end up with a base URL:
 
 `https://${myapi}.execute-api.amazonaws.com/Prod/`
-
 
 ### POST /internal/config
 Creates an Index for the documents. You may update this whenever you want to.
@@ -133,11 +128,8 @@ Return the schema that is being used to index the documents
 - Change the default internal API key
 - Add Auth to your routes to restrict access
 
+
 ### Design
 
-
-
-
-
-
+![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/Architecture.png)
 
