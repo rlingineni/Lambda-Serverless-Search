@@ -31,8 +31,9 @@ After you deploy, you will end up with a base URL:
 
 `https://${myapi}.execute-api.amazonaws.com/Prod/`
 
+
 ### POST /internal/config
-Creates an Indexing
+Creates an Index for the documents. You may update this whenever you want to.
 
 
 | body parameters |  definition | 
@@ -45,7 +46,7 @@ Creates an Indexing
 ##### Input
 ```javascript
 {
-    "apikey":"supersecretkey",
+    	"apikey":"supersecretkey",
 	"fields":["title","year","director","year","genre","tldr"],
 	"ref": "id"
 }
@@ -56,6 +57,7 @@ Creates an Indexing
 	"msg":"Document Uploaded!"
 }
 ```
+-------------------
 
 ### POST /add
 Adds a new document to search
@@ -88,6 +90,7 @@ Adds a new document to search
 }
 ```
 
+-------------------
 
 ### GET /search
 Searches all the documents 
@@ -115,9 +118,30 @@ The default set-up allows for a fuzzy edit distance of two characters. You may t
     ]
 ```
 
+-------------------
 
-### Things you may want to do
-- Open API Gateway and make add auth to your routes
-- 
+### GET /internal/config
+Return the schema that is being used to index the documents
+
+##### Response
+```
+    {
+    	"fields":["title","year","director","year","genre","tldr"],
+	"ref": "id"
+    }
+```
+
+-------------------
+
+## Next Steps
+- Change the default internal API key
+- Add Auth to your routes to restrict access
+
+### Design
+
+
+
+
+
 
 
