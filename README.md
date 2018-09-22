@@ -4,12 +4,8 @@ I love elasticsearch. I love serverless functions. But I love serverless functio
 
 The search algorithm powering the system is [lunrjs](http://lunrjs.com).
 
-## Components
-- API Gateway
-- S3 Bucket
-- DynamoDB
-
-There were a few 
+## Architecture
+![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/Architecture.png)
 
 
 ## Getting Started
