@@ -18,8 +18,8 @@ You may head over to the [Serverless Application Repository](sss) now and deploy
 
 You will have to provide two parameters:
 
-`TargetBucket` - The Name of S3 Bucket that should be created, this is where all the documents will sit
-  - remember the S3 naming conventions, only lowercase and alphanumberic)
+`TargetBucket` - The Name of S3 Bucket that should be created, this is where all the documents will sit 
+    Note: (remember the S3 naming conventions, only lowercase and alphanumberic)
 
 `InternalAPIKey` - This API Key is a secret string that will allow you to perform updating the index. Do not share this key with anyone
 
