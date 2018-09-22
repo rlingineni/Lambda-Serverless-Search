@@ -6,6 +6,10 @@ Parameters:
   TargetBucket:
     Description: Name of S3 bucket where documents should be uploaded (Note - make this bucket before you deploy!)
     Type: String
+  InternalAPIKey: 
+    Type: String
+    Default: supersecretkey
+    Description: Internal API Key that you will use to update the index function  
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
@@ -22,6 +26,7 @@ Resources:
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           BUCKET_NAME: !Ref TargetBucket
+          INTERNAL_API_KEY: !Ref InternalAPIKey
       Policies:
         - Statement:
             - Action:
@@ -111,8 +116,8 @@ Resources:
 
 Outputs:
   DocumentSearchApi:
-    Description: "API Gateway endpoint URL for Prod stage for Document Search function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/search/"
+    Description: "API Gateway endpoint URL for searching"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
 
   DocumentSearchFunction:
     Description: "Serverless Document Search Function ARN"

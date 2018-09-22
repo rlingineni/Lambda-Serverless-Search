@@ -17,7 +17,7 @@ const SearchConfigSchema = {
 	required: ["fields", "ref"]
 };
 
-let BUCKET_NAME;
+let BUCKET_NAME, API_KEY;
 /**
  *
  * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
@@ -54,6 +54,7 @@ let BUCKET_NAME;
  */
 exports.lambdaHandler = async (event, context) => {
 	BUCKET_NAME = process.env.BUCKET_NAME;
+	API_KEY = process.env.INTERNAL_API_KEY;
 
 	let path = event.path;
 	let method = event.httpMethod;
@@ -78,8 +79,6 @@ exports.lambdaHandler = async (event, context) => {
 		default:
 			return BuildResponse(400, "Not a valid path", false);
 	}
-
-	return response;
 };
 
 async function AddDocument(documents) {
@@ -113,6 +112,9 @@ async function GetConfigDocument() {
 }
 
 async function UpdateConfigDocument(config) {
+	if (config.key != API_KEY) {
+		return "Invalid API Key for Internal Config";
+	}
 	let schemaCheck = v.validate(config, SearchConfigSchema);
 	console.log(schemaCheck);
 	if (schemaCheck["errors"] && schemaCheck.errors.length > 0) {
