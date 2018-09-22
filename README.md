@@ -18,14 +18,30 @@ You may head over to the [Serverless Application Repository](sss) now and deploy
 
 You will have to provide two parameters:
 
-`TargetBucket`:
+`TargetBucket` - The Name of S3 Bucket that should be created, this is where all the documents will sit
+  - remember the S3 naming conventions, only lowercase and alphanumberic)
+
+`InternalAPIKey` - This API Key is a secret string that will allow you to perform updating the index. Do not share this key with anyone
 
 
-Once depl
 ### API Routes
 
 
-| API Route  |  Function | Input|
+
+### /search
+Searches all the documents
+
+
+| API Route  |  What it does | Input| 
 | ------------- | ------------- |---------|
 | `\search`  | Content Cell  |
-| Content Cell  | Content Cell  |
+| `\internal\config`  | Content Cell  |
+
+
+You may use this [postman collection](Postman) and set up your API routes.
+
+### Things you may want to do
+- Open API Gateway and make add auth to your routes
+- 
+
+
