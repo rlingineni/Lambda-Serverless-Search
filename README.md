@@ -4,6 +4,11 @@ I love elasticsearch. I love serverless functions. But I love serverless functio
 
 The search algorithm powering the system is [lunrjs](http://lunrjs.com).
 
+### AWS Components
+- S3	
+- Lambda
+- API Gateway
+
 ## Getting Started
 
 You may head over to the [Serverless Application Repository](sss) and deploy the service.
@@ -23,6 +28,7 @@ After you deploy, you will end up with a base URL:
 
 `https://${myapi}.execute-api.amazonaws.com/Prod/`
 
+-------------------
 ### POST /internal/config
 Creates an Index for the documents. You may update this whenever you want to.
 
@@ -124,7 +130,7 @@ Return the schema that is being used to index the documents
 
 -------------------
 
-## Next Steps
+### Next Steps
 - Change the default internal API key
 - Add Auth to your routes to restrict access
 
