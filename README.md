@@ -1,147 +1,123 @@
-# sam-app
+# Lambda Serverless Search
 
-This is a sample template for sam-app - Below is a brief explanation of what we have generated for you:
+I love elasticsearch. I love serverless functions. But I love serverless functions more because they're cheaper to run. The purpose of this project is to allow the benefits of free text searching but work and scale at the most minimal cost.
 
-```bash
-.
-├── README.md                   <-- This instructions file
-├── hello_world                 <-- Source code for a lambda function
-│   ├── app.js                  <-- Lambda function code
-│   ├── package.json            <-- NodeJS dependencies
-│   └── tests                   <-- Unit tests
-│       └── unit
-│           └── test_handler.js
-└── template.yaml               <-- SAM template
+The search algorithm powering the system is [lunrjs](http://lunrjs.com).
+
+## Components
+- API Gateway
+- S3 Bucket
+- DynamoDB
+
+There were a few 
+
+
+## Getting Started
+
+You may head over to the [Serverless Application Repository](sss) now and deploy the service.
+
+You will have to provide two parameters when you deploy:
+
+`TargetBucket` - The Name of S3 Bucket that should be created, this is where all the documents will sit 
+> Note: remember the S3 bucket naming conventions, only lowercase and alphanumberic
+
+`InternalAPIKey` - This API Key is a secret string. Do not share this key with anyone, it will allow you to change your index configuration
+
+You may use this [postman collection](Postman) and test set up your API routes.
+
+### API Routes
+
+After you deploy, you will end up with a base URL:
+
+`https://${myapi}.execute-api.amazonaws.com/Prod/`
+
+### POST /internal/config
+Creates an Indexing
+
+
+| body parameters |  definition | 
+| ------------- | ------------- |
+| `apikey`  | An Internal Auth String to only let people with access make a request. Keep this secret, don't make this request from a client  | 
+| `fields`  | Array of strings with the name of attributes that are to be indexed in document| 
+| `ref`  | The ref is one field that will be returned. Most people use an ID, that they can later lookup|
+
+
+##### Input
+```javascript
+{
+    "apikey":"supersecretkey",
+	"fields":["title","year","director","year","genre","tldr"],
+	"ref": "id"
+}
+```
+##### Response
+```
+{
+	"msg":"Document Uploaded!"
+}
 ```
 
-## Requirements
-
-* AWS CLI already configured with at least PowerUser permission
-* [NodeJS 8.10+ installed](https://nodejs.org/en/download/)
-* [Docker installed](https://www.docker.com/community-edition)
-
-## Setup process
-
-### Installing dependencies
-
-In this example we use `npm` but you can use `yarn` if you prefer to manage NodeJS dependencies:
-
-```bash
-cd hello_world
-npm install
-cd ../
+### POST /add
+Adds a new document to search
+##### Input
+```javascript
+[
+    {           
+        "id":"112233",
+        "title": "Titanic",
+        "year": 1997,
+        "director": "Steven Spielberg",
+        "genre": "Romance",
+        "tldr": "An Amazing love story"
+    },
+    {           
+        "id":"115566",
+        "title": "Shawshank Redemption",
+        "year": 1994,
+        "director": "Frank Darabont",
+        "genre": "Misc.",
+        "tldr": "Story of friendship"
+    }
+]
 ```
 
-### Local development
-
-**Invoking function locally through local API Gateway**
-
-```bash
-sam local start-api
+##### Response
+```
+{
+	"msg":"Document Uploaded!"
+}
 ```
 
-If the previous command ran successfully you should now be able to hit the following local endpoint to invoke your function `http://localhost:3000/hello`
 
-**SAM CLI** is used to emulate both Lambda and API Gateway locally and uses our `template.yaml` to understand how to bootstrap this environment (runtime, where the source code is, etc.) - The following excerpt is what the CLI will read in order to initialize an API and its routes:
+### GET /search
+Searches all the documents 
 
-```yaml
-...
-Events:
-    HelloWorld:
-        Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-        Properties:
-            Path: /hello
-            Method: get
+##### Input
+| query parameters |  definition | Example| 
+| ------------- | ------------- |---------|
+| `q`  | query string to be searched  | `/Prod/search?q=titan` |
+
+The default set-up allows for a fuzzy edit distance of two characters. You may tweak the algorithm [here] (https://github.com/rlingineni/Lambda-Serverless-Search/blob/2099d87854b4c7f23eced3214a3141ef66bef95d/document_search/app.js#L173). LunrJS [docs](https://lunrjs.com/guides/searching.html) will also help.
+##### Response
+```
+    [
+        {
+            "ref": "112233",
+            "score": 1.992,
+            "matchData": {
+                "metadata": {
+                    "titan": {
+                        "title": {}
+                    }
+                }
+            }
+        }
+    ]
 ```
 
-## Packaging and deployment
 
-AWS Lambda NodeJS runtime requires a flat folder with all dependencies including the application. SAM will use `CodeUri` property to know where to look up for both application and dependencies:
+### Things you may want to do
+- Open API Gateway and make add auth to your routes
+- 
 
-```yaml
-...
-    FirstFunction:
-        Type: AWS::Serverless::Function
-        Properties:
-            CodeUri: hello_world/
-            ...
-```
 
-Firstly, we need a `S3 bucket` where we can upload our Lambda functions packaged as ZIP before we deploy anything - If you don't have a S3 bucket to store code artifacts then this is a good time to create one:
-
-```bash
-aws s3 mb s3://BUCKET_NAME
-```
-
-Next, run the following command to package our Lambda function to S3:
-
-```bash
-sam package \
-    --template-file template.yaml \
-    --output-template-file packaged.yaml \
-    --s3-bucket REPLACE_THIS_WITH_YOUR_S3_BUCKET_NAME
-```
-
-Next, the following command will create a Cloudformation Stack and deploy your SAM resources.
-
-```bash
-sam deploy \
-    --template-file packaged.yaml \
-    --stack-name sam-app \
-    --capabilities CAPABILITY_IAM
-```
-
-> **See [Serverless Application Model (SAM) HOWTO Guide](https://github.com/awslabs/serverless-application-model/blob/master/HOWTO.md) for more details in how to get started.**
-
-After deployment is complete you can run the following command to retrieve the API Gateway Endpoint URL:
-
-```bash
-aws cloudformation describe-stacks \
-    --stack-name sam-app \
-    --query 'Stacks[].Outputs'
-``` 
-
-## Testing
-
-We use `mocha` for testing our code and it is already added in `package.json` under `scripts`, so that we can simply run the following command to run our tests:
-
-```bash
-cd hello_world
-npm run test
-```
-
-# Appendix
-
-## AWS CLI commands
-
-AWS CLI commands to package, deploy and describe outputs defined within the cloudformation stack:
-
-```bash
-sam package \
-    --template-file template.yaml \
-    --output-template-file packaged.yaml \
-    --s3-bucket REPLACE_THIS_WITH_YOUR_S3_BUCKET_NAME
-
-sam deploy \
-    --template-file packaged.yaml \
-    --stack-name sam-app \
-    --capabilities CAPABILITY_IAM \
-    --parameter-overrides MyParameterSample=MySampleValue
-
-aws cloudformation describe-stacks \
-    --stack-name sam-app --query 'Stacks[].Outputs'
-```
-
-**NOTE**: Alternatively this could be part of package.json scripts section.
-
-## Bringing to the next level
-
-Here are a few ideas that you can use to get more acquainted as to how this overall process works:
-
-* Create an additional API resource (e.g. /hello/{proxy+}) and return the name requested through this new path
-* Update unit test to capture that
-* Package & Deploy
-
-Next, you can use the following resources to know more about beyond hello world samples and how others structure their Serverless applications:
-
-* [AWS Serverless Application Repository](https://aws.amazon.com/serverless/serverlessrepo/)
