@@ -111,7 +111,7 @@ Searches all the articles
 | ------------- | ------------- |---------|
 | `q`  | query string to be searched  | `/Prod/search?q=titan` |
 
-The default set-up allows for a fuzzy edit distance of two characters. You may tweak the algorithm [here] (https://github.com/rlingineni/Lambda-Serverless-Search/blob/2099d87854b4c7f23eced3214a3141ef66bef95d/document_search/app.js#L173). LunrJS [docs](https://lunrjs.com/guides/searching.html) will also help.
+The default set-up allows for a fuzzy edit distance of two characters. You may tweak the search algorithm [here](https://github.com/rlingineni/Lambda-Serverless-Search/blob/2099d87854b4c7f23eced3214a3141ef66bef95d/document_search/app.js#L173). LunrJS [docs](https://lunrjs.com/guides/searching.html) will also help.
 ##### Response
 ```
     [
@@ -147,6 +147,8 @@ Return the schema that is being used to index the documents
 ### Next Steps and Optimizations
 - Change the default internal API key
 - Add Auth to your routes to restrict access
+- Add pagination for large sets of results
+	- might need a temp cache with correleation-id
 - Update to get all S3 Articles via AWS Athena
 - Nightly Batch function to group articles from one day into a large document
 
