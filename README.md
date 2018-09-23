@@ -28,7 +28,11 @@ You will have to provide two parameters when you deploy:
 
 `InternalAPIKey` - This API Key is a secret string. Do not share this key with anyone, it will allow you to change your index configuration
 
-You may use this [postman collection](Postman) and test the API routes. Make sure to change the URL. Read below for route docs and design.
+You may test the API in postman. Be sure to update the BaseURL.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/c050def4904367e08d45)
+
+Read below for route docs and design.
 
 ### Design
 
