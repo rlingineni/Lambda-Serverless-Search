@@ -60,8 +60,9 @@ Creates an Index(s) for the articles. You may update this whenever you want to.
 | `config`  | Array of index config objects. See below table| 
 
 **Config Body**
+
 | body parameters |  definition | required|
-| ------------- | ------------- |
+| ------------- | ------------- |------------- 
 | `fields`  | Array of strings with the name of attributes that are to be indexed in document| `yes`|
 | `name`  | The name of the index| `yes`|
 | `ref`  | The ref is one field that will be returned. Most people use an ID, that they can later lookup in a DB or other store|`yes`|
