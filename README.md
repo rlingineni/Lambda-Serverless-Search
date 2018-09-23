@@ -144,7 +144,7 @@ Return the schema that is being used to index the documents
 
 -------------------
 
-### Next Steps and Optimizations
+### Next Steps, Optimizations and Future
 - Change the default internal API key
 - Add Auth to your routes to restrict access
 - Add pagination for large sets of results
