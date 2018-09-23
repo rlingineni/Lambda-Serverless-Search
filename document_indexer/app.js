@@ -8,13 +8,8 @@ exports.lambdaHandler = async (event, context) => {
 
 	let AddedItem = event.Records[0].s3.object.key;
 
-	switch (AddedItem) {
-		case "articles_all.json":
-			return;
-		case "search_config.json":
-			return;
-		case "search_index.json":
-			return;
+	if (!AddedItem.startsWith("articles/")) {
+		return "Skipping the addition of a non-article";
 	}
 
 	//fetch index configuration from S3
@@ -48,20 +43,20 @@ exports.lambdaHandler = async (event, context) => {
 
 	//make indexes and upload them
 
-	for (var index of IndexConfig.configs) {
+	for (var config of IndexConfig.configs) {
 		//build the index and upload new index
 		var index = lunr(function() {
-			for (var field of index.fields) {
+			for (var field of config.fields) {
 				this.field(field);
 			}
-			this.ref(index.ref);
+			this.ref(config.ref);
 			AllArticles.forEach(function(article) {
 				this.add(article);
 			}, this);
 		});
 
-		await uploadToS3(BUCKET_NAME, "search_index" + index.name + ".json", JSON.stringify(index));
-		console.log("Uploaded index: " + index.name);
+		await uploadToS3(BUCKET_NAME, "search_index_" + config.name + ".json", JSON.stringify(index));
+		console.log("Uploaded index: " + config.name);
 	}
 
 	/*

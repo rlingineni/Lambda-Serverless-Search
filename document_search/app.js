@@ -102,7 +102,7 @@ async function GetConfigDocument() {
 }
 
 async function UpdateConfigDocument(SearchConfig) {
-	if (!SearchConfig.key || SearchConfig.key != API_KEY) {
+	if (!SearchConfig.apikey || SearchConfig.apikey != API_KEY) {
 		return BuildResponse(401, "You may not update the config");
 	}
 	if (!SearchConfig.configs) {
@@ -111,7 +111,7 @@ async function UpdateConfigDocument(SearchConfig) {
 	for (var index of SearchConfig.configs) {
 		let schemaCheck = v.validate(index, SearchConfigSchema);
 		if (!isValidIndexName(index.name)) {
-			return BuildResponse(400, "Invalid Index Name. Names must be one-word lowercase:  " + index.name);
+			return BuildResponse(400, "Invalid Index Name. Names must be one-word and lowercase:  " + index.name);
 		}
 		console.log(schemaCheck);
 		if (schemaCheck["errors"] && schemaCheck.errors.length > 0) {
@@ -122,23 +122,22 @@ async function UpdateConfigDocument(SearchConfig) {
 			}
 			return BuildResponse(400, "Invalid Search Index Schema: " + listOfMessages);
 		}
-
-		//add to S3 Bucket
-		var params = {
-			Bucket: BUCKET_NAME,
-			Key: "search_config_" + name + ".json",
-			Body: JSON.stringify(config)
-		};
-		try {
-			await s3.putObject(params).promise();
-			console.log("Uploaded search configuration for: " + index.name);
-		} catch (err) {
-			console.log(err);
-			return BuildResponse(400, "Uploading Configuration Failed. Please check logs");
-		}
 	}
 
-	return BuildResponse(200, "Index Config Updated");
+	//add to S3 Bucket
+	var params = {
+		Bucket: BUCKET_NAME,
+		Key: "search_config.json",
+		Body: JSON.stringify(SearchConfig)
+	};
+	try {
+		await s3.putObject(params).promise();
+		console.log("Uploaded search configuration for: " + index.name);
+		return BuildResponse(200, "Index Config Updated");
+	} catch (err) {
+		console.log(err);
+		return BuildResponse(400, "Uploading Configuration Failed. Please check logs");
+	}
 }
 
 async function UploadArticle(document) {
@@ -157,16 +156,16 @@ async function UploadArticle(document) {
 	}
 }
 
-async function SearchForDocument(query, numValues = 25, index) {
+async function SearchForDocument(query, numValues = 25, indexName) {
 	console.log("Searching Index for ", query);
-	if (!index || !isValidIndexName(index)) {
+	if (!indexName || !isValidIndexName(indexName)) {
 		return BuildResponse(400, "Invalid Index Name");
 	}
 	//Load Index from S3
 	try {
 		var params = {
 			Bucket: BUCKET_NAME,
-			Key: "search_index_" + index + ".json"
+			Key: "search_index_" + indexName + ".json"
 		};
 		let data = await s3.getObject(params).promise();
 		let searchIndex = JSON.parse(data.Body);
@@ -176,13 +175,13 @@ async function SearchForDocument(query, numValues = 25, index) {
 		//perform
 		let results = index.query(function(q) {
 			// exact matches should have the highest boost
-			q.term(searchTerm, { boost: 100 });
+			q.term(query, { boost: 100 });
 
 			// prefix matches should be boosted slightly
-			q.term(searchTerm, { boost: 10, usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING });
+			q.term(query, { boost: 10, usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING });
 
 			// finally, try a fuzzy search with character 2, without any boost
-			q.term(searchTerm, { boost: 5, usePipeline: false, editDistance: 3 });
+			q.term(query, { boost: 5, usePipeline: false, editDistance: 3 });
 		});
 
 		return BuildResponse(200, results.slice(0, numValues), true);
@@ -193,12 +192,12 @@ async function SearchForDocument(query, numValues = 25, index) {
 	}
 }
 
-function BuildResponse(statusCode, response, shouldStringify = false) {
+function BuildResponse(statusCode, responseBody, shouldStringify = false) {
 	let body = "invalid response";
 	if (shouldStringify) {
-		body = JSON.stringify(response);
+		body = JSON.stringify(responseBody);
 	} else {
-		body = JSON.stringify({ msg: response });
+		body = JSON.stringify({ msg: responseBody });
 	}
 
 	let response = {
@@ -212,7 +211,7 @@ function BuildResponse(statusCode, response, shouldStringify = false) {
 function isValidIndexName(str) {
 	if (str) {
 		var re = /^[a-z]+$/g;
-		return re.test(val);
+		return re.test(str);
 	}
 
 	return false;
