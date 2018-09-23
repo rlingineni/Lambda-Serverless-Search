@@ -15,7 +15,7 @@ const SearchConfigSchema = {
 		ref: { type: "string" },
 		name: { type: "string" }
 	},
-	required: ["fields", "ref"]
+	required: ["fields", "ref", "name"]
 };
 
 let BUCKET_NAME, API_KEY;
@@ -173,15 +173,15 @@ async function SearchForDocument(query, numValues = 25, indexName) {
 		//load the index to lunr
 		let index = lunr.Index.load(searchIndex);
 		//perform
-		let results = index.query(function(q) {
+		let results = index.query(function() {
 			// exact matches should have the highest boost
-			q.term(query, { boost: 100 });
+			this.term(lunr.tokenizer(query), { boost: 100 });
 
 			// prefix matches should be boosted slightly
-			q.term(query, { boost: 10, usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING });
+			this.term(query, { boost: 10, usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING });
 
 			// finally, try a fuzzy search with character 2, without any boost
-			q.term(query, { boost: 5, usePipeline: false, editDistance: 3 });
+			this.term(query, { boost: 5, usePipeline: false, editDistance: 3 });
 		});
 
 		return BuildResponse(200, results.slice(0, numValues), true);
