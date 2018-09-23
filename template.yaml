@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  Search API for a collection of documents
+  Free text search API and indexer for a collection of articles
 Parameters:
   TargetBucket:
     Description: Name of S3 bucket where documents should be uploaded (Note - make this bucket before you deploy!)
@@ -9,7 +9,7 @@ Parameters:
   InternalAPIKey: 
     Type: String
     Default: supersecretkey
-    Description: Internal API Key that you will use to update the index function  
+    Description: Internal API Key that you will use when making requests to update the search index configuration
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
