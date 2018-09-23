@@ -139,7 +139,8 @@ Searches all the articles
 ##### Input
 | query parameters |  definition | Example| 
 | ------------- | ------------- |---------|
-| `q`  | query string to be searched  | `/Prod/search?q=titan` |
+| `q`  | query string to be searched  | `/Prod/search?q=titan&index=ids` |
+| `index`  | index to be used | `/Prod/search?q=get&index=autocomplete` |
 
 The default set-up allows for a fuzzy edit distance of two characters. You may tweak the search algorithm [here](https://github.com/rlingineni/Lambda-Serverless-Search/blob/2099d87854b4c7f23eced3214a3141ef66bef95d/document_search/app.js#L173). LunrJS [docs](https://lunrjs.com/guides/searching.html) will also help.
 ##### Response
