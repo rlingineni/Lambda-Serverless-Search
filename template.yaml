@@ -4,7 +4,7 @@ Description: >
   Free text search API and indexer for a collection of articles
 Parameters:
   TargetBucket:
-    Description: Name of S3 bucket where documents should be uploaded (Note - make this bucket before you deploy!)
+    Description: Name of S3 bucket to create where search articles should be uploaded (remember s3 bucket names are only lowercase)
     Type: String
   InternalAPIKey: 
     Type: String
@@ -120,13 +120,15 @@ Outputs:
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
 
   DocumentSearchFunction:
-    Description: "Serverless Document Search Function ARN"
+    Description: "Serverless Document API Search Function ARN"
     Value: !GetAtt DocumentSearchFunction.Arn
+
+  DocumentIndexingFunction:
+    Description: "Serverless Document Search Function ARN"
+    Value: !GetAtt DocumentIndexingFunction.Arn
 
   DocumentCollectionBucket:
-    Description: "S3 Bucket for All uploaded documents, index information and database"
-    Value: !GetAtt DocumentSearchFunction.Arn
+    Description: "S3 Bucket for all uploaded documents and indexing information"
+    Value: !Ref TargetBucket
 
-  DocumentSearchFunctionIamRole:
-    Description: "Implicit IAM Role created for Document Search function"
-    Value: !GetAtt DocumentSearchFunction.Arn
+ 
