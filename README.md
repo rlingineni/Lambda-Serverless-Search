@@ -11,7 +11,7 @@ Things to keep in mind:
 - Great for exposing search for sets of new data and existing data (~50,000 records)
 - More documents can mean slower performance - how much? I don't know yet. Let me know if you do. 
 - AWS Lambda Memory requirements might need to be updated as per dataset
-- This is not a database - it is a search service. You will get information on the reference id only.
+- This is not a database - it is a search service. You will get results with the reference id only, not the entire document.
 
 ### AWS Components
 - S3	
@@ -39,7 +39,7 @@ After you deploy, you will end up with a base URL:
 
 -------------------
 ### POST /internal/config
-Creates an Index for the documents. You may update this whenever you want to.
+Creates an Index for the articles. You may update this whenever you want to.
 
 
 | body parameters |  definition | 
@@ -66,7 +66,7 @@ Creates an Index for the documents. You may update this whenever you want to.
 -------------------
 
 ### POST /add
-Adds a new document to search
+Adds a new article to search
 ##### Input
 ```javascript
 [
@@ -99,7 +99,7 @@ Adds a new document to search
 -------------------
 
 ### GET /search
-Searches all the documents 
+Searches all the articles
 
 ##### Input
 | query parameters |  definition | Example| 
@@ -143,7 +143,7 @@ Return the schema that is being used to index the documents
 - Change the default internal API key
 - Add Auth to your routes to restrict access
 - Update to get all S3 Articles via AWS Athena
-- Nightly Batch function to group documents from one day into one large document
+- Nightly Batch function to group articles from one day into a large document
 
 
 ### Design
