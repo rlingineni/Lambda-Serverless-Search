@@ -28,11 +28,15 @@ You will have to provide two parameters when you deploy:
 
 `InternalAPIKey` - This API Key is a secret string. Do not share this key with anyone, it will allow you to change your index configuration
 
-You may test the API in postman. Be sure to update the BaseURL.
+You may test the API in postman. Be sure to update the BaseURL. Read below for route docs and design.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/c050def4904367e08d45)
 
-Read below for route docs and design.
+After deploying here are somethings you might want to:
+- Change the default internal API key
+- Add Auth to your routes to restrict access
+
+
 
 ### Design
 
@@ -47,60 +51,80 @@ After you deploy, you will end up with a base URL:
 
 -------------------
 ### POST /internal/config
-Creates an Index for the articles. You may update this whenever you want to.
+Creates an Index(s) for the articles. You may update this whenever you want to. 
 
 
 | body parameters |  definition | 
 | ------------- | ------------- |
 | `apikey`  | An Internal Auth String to only let people with access make a request. Keep this secret, don't make this request from a client  | 
-| `fields`  | Array of strings with the name of attributes that are to be indexed in document| 
-| `ref`  | The ref is one field that will be returned. Most people use an ID, that they can later lookup|
+| `config`  | Array of index config objects. See below table| 
 
+**Config Body**
+| body parameters |  definition | required|
+| ------------- | ------------- |
+| `fields`  | Array of strings with the name of attributes that are to be indexed in document| `yes`|
+| `name`  | The name of the index| `yes`|
+| `ref`  | The ref is one field that will be returned. Most people use an ID, that they can later lookup in a DB or other store|`yes`|
 
 ##### Input
 ```javascript
 {
-    	"apikey":"supersecretkey",
-	"fields":["title","year","director","year","genre","tldr"],
-	"ref": "id"
+    "apikey":"supersecretkey",
+	"configs":[
+		{
+			"name":"movies",
+			"fields":["title","year","director","year","genre","tldr"],
+			"ref": "id"
+		},
+		{	"name":"movies-autocomplete",
+			"fields":["title","year","director","year","genre","tldr"],
+			"ref": "title"
+		},
+		{	"name":"actors",
+			"fields":["name","age","birthplace","alma mater"],
+			"ref": "id"
+		}
+	]
+	
 }
 ```
 ##### Response
 ```
 {
-	"msg":"Document Uploaded!"
+	"msg":"Index Config Updated"
 }
 ```
 -------------------
 
 ### POST /add
 Adds a new article to search
+`prefix` - prefix may be added to store the data in a different location than `articles`. This is ideal for seperate indexes, or it may be omitted
 ##### Input
 ```javascript
-[
-    {           
-        "id":"112233",
-        "title": "Titanic",
-        "year": 1997,
-        "director": "Steven Spielberg",
-        "genre": "Romance",
-        "tldr": "An Amazing love story"
-    },
-    {           
-        "id":"115566",
-        "title": "Shawshank Redemption",
-        "year": 1994,
-        "director": "Frank Darabont",
-        "genre": "Misc.",
-        "tldr": "Story of friendship"
-    }
+ [
+	    {           
+		"id":"112233",
+		"title": "Titanic",
+		"year": 1997,
+		"director": "Steven Spielberg",
+		"genre": "Romance",
+		"tldr": "An Amazing love story"
+	    },
+	    {           
+		"id":"115566",
+		"title": "Shawshank Redemption",
+		"year": 1994,
+		"director": "Frank Darabont",
+		"genre": "Misc.",
+		"tldr": "Story of friendship"
+	    }
+	
 ]
 ```
-
 ##### Response
 ```
 {
-	"msg":"Document Uploaded!"
+	"msg":"Article Added"
 }
 ```
 
@@ -146,13 +170,13 @@ Return the schema that is being used to index the documents
 ```
 
 -------------------
-
 ### Next Steps, Optimizations and Future
-- Change the default internal API key
-- Add Auth to your routes to restrict access
+
 - Add pagination for large sets of results
 	- might need a temp cache with correleation-id
 - Update to get all S3 Articles via AWS Athena
+- For Multiple indexes, support a seperate index file locations away from one large shared folder
 - Nightly Batch function to group articles from one day into a large document
+- Add Cache to keep track of most popular results in order to dynamically perform result boosts
 
 
