@@ -7,7 +7,9 @@ The search algorithm powering the system is [lunrjs](http://lunrjs.com).
 #### Limitations
 Remember, this is a poorman's elastic search. 
 
-- Great for exposing search for sets of new data and existing data (~50,000 records)
+- Great for exposing search for sets of new data and existing data
+- Can be used to perform autocompletes
+- Use as a lite api before migrating to a full scale search solution
 - More documents can mean slower performance - how much? I don't know yet. Let me know if you do. 
 - AWS Lambda Memory requirements might need to be updated as per dataset
 - This is not a database, it is a search service. You will get results with the reference id only, not the entire document.
