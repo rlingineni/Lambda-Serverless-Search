@@ -46,16 +46,23 @@ exports.lambdaHandler = async (event, context) => {
 		}
 	}
 
-	//build the index and upload new index
-	var index = lunr(function() {
-		for (var field of IndexConfig.fields) {
-			this.field(field);
-		}
-		this.ref(IndexConfig.ref);
-		AllArticles.forEach(function(document) {
-			this.add(document);
-		}, this);
-	});
+	//make indexes and upload them
+
+	for (var index of IndexConfig.configs) {
+		//build the index and upload new index
+		var index = lunr(function() {
+			for (var field of index.fields) {
+				this.field(field);
+			}
+			this.ref(index.ref);
+			AllArticles.forEach(function(article) {
+				this.add(article);
+			}, this);
+		});
+
+		await uploadToS3(BUCKET_NAME, "search_index" + index.name + ".json", JSON.stringify(index));
+		console.log("Uploaded index: " + index.name);
+	}
 
 	/*
 		Keep this all articles document for reference, we will not necessarily use it
@@ -63,9 +70,6 @@ exports.lambdaHandler = async (event, context) => {
 	//update "alldocs.json"
 	await uploadToS3(BUCKET_NAME, "articles_all.json", JSON.stringify(AllArticles));
 	console.log("Uploaded all articles back!");
-
-	await uploadToS3(BUCKET_NAME, "search_index.json", JSON.stringify(index));
-	console.log("Uploaded index!");
 };
 
 /**

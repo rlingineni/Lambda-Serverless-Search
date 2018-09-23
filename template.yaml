@@ -116,7 +116,7 @@ Resources:
 
 Outputs:
   DocumentSearchApi:
-    Description: "API Gateway endpoint URL for searching"
+    Description: "Deployed API Gateway Endpoint URL"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
 
   DocumentSearchFunction:

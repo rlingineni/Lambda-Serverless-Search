@@ -12,7 +12,8 @@ const SearchConfigSchema = {
 			type: "array",
 			items: { type: "string" }
 		},
-		ref: { type: "string" }
+		ref: { type: "string" },
+		name: { type: "string" }
 	},
 	required: ["fields", "ref"]
 };
@@ -62,38 +63,27 @@ exports.lambdaHandler = async (event, context) => {
 	switch (path) {
 		case "/search":
 			let query = event.queryStringParameters.q;
-			return BuildResponse(200, await SearchForDocument(query), true);
+			let count = event.queryStringParameters.count || 25;
+			let index = event.queryStringParameters.index;
+			return await SearchForDocument(query, count, index);
 		case "/add":
-			if ("body" in event) {
-				let document = JSON.parse(event.body);
-				return BuildResponse(200, await UploadDocument(document), false);
+			switch (event.httpMethod) {
+				case "POST":
+					let document = JSON.parse(event.body);
+					return await UploadArticle(document);
 			}
 		case "/internal/config":
 			switch (event.httpMethod) {
 				case "POST":
 					let config = JSON.parse(event.body);
-					return BuildResponse(200, await UpdateConfigDocument(config), false);
+					return await UpdateConfigDocument(config);
 				case "GET":
-					return BuildResponse(200, await GetConfigDocument(), true);
+					return await GetConfigDocument();
 			}
 		default:
-			return BuildResponse(400, "Not a valid path", false);
+			return BuildResponse(400, "Not a valid path, or you don't have access to it", false);
 	}
 };
-
-async function AddDocument(documents) {
-	//Add Document(s) to S3 Bucket
-
-	if (Array.isArray(document)) {
-		for (var document of documents) {
-			await UploadDocument(document);
-		}
-	} else {
-		await UploadDocument(documents);
-	}
-
-	return "Uploaded Documents. Please allow up to 1 minute to allow document to be available for searching";
-}
 
 async function GetConfigDocument() {
 	//fetch previous cache of documents
@@ -103,45 +93,55 @@ async function GetConfigDocument() {
 			Key: "search_config.json"
 		};
 		let data = await s3.getObject(params).promise();
-		return JSON.parse(data.Body);
+		return BuildResponse(200, JSON.parse(data.Body), true);
 	} catch (err) {
 		console.log(err.message);
-		console.log("Search Config does not exist");
-		return "No config has been created";
+		console.log("Search Config does not exist!");
+		return BuildResponse(400, "No search configuration exists. You must upload one");
 	}
 }
 
-async function UpdateConfigDocument(config) {
-	if (config.key != API_KEY) {
-		return "Invalid API Key for Internal Config";
+async function UpdateConfigDocument(SearchConfig) {
+	if (!SearchConfig.key || SearchConfig.key != API_KEY) {
+		return BuildResponse(401, "You may not update the config");
 	}
-	let schemaCheck = v.validate(config, SearchConfigSchema);
-	console.log(schemaCheck);
-	if (schemaCheck["errors"] && schemaCheck.errors.length > 0) {
-		console.log("Cannot Upload Document, Search config invalid!");
-		let listOfMessages = [];
-		for (var err of schemaCheck.errors) {
-			listOfMessages.push(err.stack);
+	if (!SearchConfig.configs) {
+		return BuildResponse(400, "Missing List of Index Configurations");
+	}
+	for (var index of SearchConfig.configs) {
+		let schemaCheck = v.validate(index, SearchConfigSchema);
+		if (!isValidIndexName(index.name)) {
+			return BuildResponse(400, "Invalid Index Name. Names must be one-word lowercase:  " + index.name);
 		}
-		return "Invalid Schema Configuration: " + listOfMessages;
+		console.log(schemaCheck);
+		if (schemaCheck["errors"] && schemaCheck.errors.length > 0) {
+			console.log("Cannot Upload Document, Search config invalid!");
+			let listOfMessages = [];
+			for (var err of schemaCheck.errors) {
+				listOfMessages.push(err.stack);
+			}
+			return BuildResponse(400, "Invalid Search Index Schema: " + listOfMessages);
+		}
+
+		//add to S3 Bucket
+		var params = {
+			Bucket: BUCKET_NAME,
+			Key: "search_config_" + name + ".json",
+			Body: JSON.stringify(config)
+		};
+		try {
+			await s3.putObject(params).promise();
+			console.log("Uploaded search configuration for: " + index.name);
+		} catch (err) {
+			console.log(err);
+			return BuildResponse(400, "Uploading Configuration Failed. Please check logs");
+		}
 	}
 
-	//add to S3 Bucket
-	var params = {
-		Bucket: BUCKET_NAME,
-		Key: "search_config.json",
-		Body: JSON.stringify(config)
-	};
-	try {
-		var putObjectPromise = await s3.putObject(params).promise();
-		return "Uploaded Document!";
-	} catch (err) {
-		console.log(err);
-		return err;
-	}
+	return BuildResponse(200, "Index Config Updated");
 }
 
-async function UploadDocument(document) {
+async function UploadArticle(document) {
 	//add to S3 Bucket
 	var params = {
 		Bucket: BUCKET_NAME,
@@ -149,40 +149,56 @@ async function UploadDocument(document) {
 		Body: JSON.stringify(document)
 	};
 	try {
-		var putObjectPromise = await s3.putObject(params).promise();
-		return "Uploaded Document!";
+		await s3.putObject(params).promise();
+		return BuildResponse(200, "Article Added");
 	} catch (err) {
 		console.log(err);
-		return err;
+		return BuildResponse(400, "Upload Article Failed");
 	}
 }
 
-async function SearchForDocument(query) {
+async function SearchForDocument(query, numValues = 25, index) {
 	console.log("Searching Index for ", query);
-
+	if (!index || !isValidIndexName(index)) {
+		return BuildResponse(400, "Invalid Index Name");
+	}
 	//Load Index from S3
 	try {
 		var params = {
 			Bucket: BUCKET_NAME,
-			Key: "search_index.json"
+			Key: "search_index_" + index + ".json"
 		};
 		let data = await s3.getObject(params).promise();
 		let searchIndex = JSON.parse(data.Body);
 
 		//load the index to lunr
 		let index = lunr.Index.load(searchIndex);
-		//perform query
-		return index.search(query + "~2");
+		//perform
+		let results = index.query(function(q) {
+			// exact matches should have the highest boost
+			q.term(searchTerm, { boost: 100 });
+
+			// prefix matches should be boosted slightly
+			q.term(searchTerm, { boost: 10, usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING });
+
+			// finally, try a fuzzy search with character 2, without any boost
+			q.term(searchTerm, { boost: 5, usePipeline: false, editDistance: 3 });
+		});
+
+		return BuildResponse(200, results.slice(0, numValues), true);
 	} catch (err) {
+		console.log("No Search Index was found");
 		console.log(err.message);
-		console.log("Search Index cannot be found");
-		return "No Search Index was found. Make sure you have set up an index and added documents";
+		return BuildResponse(412, "No Search Index was found, or it was invalid. Make sure you have uploaded a index config first.");
 	}
 }
 
-function BuildResponse(statusCode, body, shouldStringify) {
+function BuildResponse(statusCode, response, shouldStringify = false) {
+	let body = "invalid response";
 	if (shouldStringify) {
-		body = JSON.stringify(body);
+		body = JSON.stringify(response);
+	} else {
+		body = JSON.stringify({ msg: response });
 	}
 
 	let response = {
@@ -191,4 +207,13 @@ function BuildResponse(statusCode, body, shouldStringify) {
 	};
 
 	return response;
+}
+
+function isValidIndexName(str) {
+	if (str) {
+		var re = /^[a-z]+$/g;
+		return re.test(val);
+	}
+
+	return false;
 }
