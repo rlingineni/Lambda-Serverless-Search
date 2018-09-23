@@ -4,9 +4,19 @@ I love elasticsearch. I love serverless functions. But I love serverless functio
 
 The search algorithm powering the system is [lunrjs](http://lunrjs.com).
 
+### Limitations
+
+Remember, this is a poorman's elastic search. You have to be cautious about the
+
+Things to keep in mind:
+- Great for exposing search for sets of new data and existing data (~50,000 records)
+- More documents can mean slower performance - how much? I don't know yet. Let me know if you do. 
+- AWS Lambda Memory requirements might need to be updated as per dataset
+- This is not a database - it is a search service. You will get information on the reference id only.
+
 ### AWS Components
 - S3	
-- Lambda
+- Lambda (256mb)
 - API Gateway
 
 ## Getting Started
@@ -22,7 +32,7 @@ You will have to provide two parameters when you deploy:
 
 You may use this [postman collection](Postman) and test the API routes. Make sure to change the URL. Read below for route docs and design.
 
-### API Routes
+## API Routes
 
 After you deploy, you will end up with a base URL:
 
@@ -130,9 +140,11 @@ Return the schema that is being used to index the documents
 
 -------------------
 
-### Next Steps
+### Next Steps and Optimizations
 - Change the default internal API key
 - Add Auth to your routes to restrict access
+- Update to get all S3 Articles via AWS Athena
+- Nightly Batch function to group documents from one day into one large document
 
 
 ### Design
