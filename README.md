@@ -5,7 +5,7 @@ I love elasticsearch. I love serverless functions. But I love serverless functio
 The search algorithm powering the system is [lunrjs](http://lunrjs.com).
 
 #### Limitations
-Remember, this is a poorman's elastic search. You have to be cautious about the
+Remember, this is a poorman's elastic search. 
 
 Things to keep in mind:
 - Great for exposing search for sets of new data and existing data (~50,000 records)
