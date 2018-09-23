@@ -1,7 +1,7 @@
 const lunr = require("lunr");
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3();
-let BUCKET_NAME;
+let BUCKET_NAME, IndexConfig;
 
 exports.lambdaHandler = async (event, context) => {
 	BUCKET_NAME = process.env.BUCKET_NAME;
@@ -17,35 +17,14 @@ exports.lambdaHandler = async (event, context) => {
 			return;
 	}
 
-	/*
-	//don't run function if it is not s3
-	if (event.Records[0].s3.object.key === "articles_all.json") {
-		return;
-	}
-
-	//don't run function if it is not s3
-	if (event.Records[0].s3.object.key === "search_config.json") {
-		return;
-	}
-
-	//don't run function if it is not s3
-	if (event.Records[0].s3.object.key === "search_index.json") {
-		return;
-	}*/
-
 	//fetch index configuration from S3
-	let SearchConfig = await getJSONFile(BUCKET_NAME, "search_config.json");
-	if (SearchConfig != null) {
-		IndexConfig = SearchConfig;
-	} else {
+	IndexConfig = await getJSONFile(BUCKET_NAME, "search_config.json");
+	if (IndexConfig == null) {
 		return "Please set the Search Index Configuration before adding documents";
 	}
 
 	//fetch previous cache of documents
-	let AllArticles = await getJSONFile(BUCKET_NAME, "articles_all.json");
-	if (AllArticles == null) {
-		AllArticles = [];
-	}
+	let AllArticles = [];
 
 	//fetch every document uploaded to S3 in articles folder
 	let listOfDocuments = await listObjects(BUCKET_NAME, "articles/");
@@ -58,7 +37,12 @@ exports.lambdaHandler = async (event, context) => {
 	let PromiseResults = await Promise.all(listOfDocumentPromises);
 	for (var result of PromiseResults) {
 		if (result != null) {
-			AllArticles.push(result);
+			let isArray = Array.isArray(result);
+			if (isArray) {
+				AllArticles = AllArticles.concat(result);
+			} else {
+				AllArticles.push(result);
+			}
 		}
 	}
 
@@ -67,16 +51,14 @@ exports.lambdaHandler = async (event, context) => {
 		for (var field of IndexConfig.fields) {
 			this.field(field);
 		}
-
 		this.ref(IndexConfig.ref);
-
 		AllArticles.forEach(function(document) {
 			this.add(document);
 		}, this);
 	});
 
 	/*
-		Keep this document for reference, but it will be used just in case
+		Keep this all articles document for reference, we will not necessarily use it
 	*/
 	//update "alldocs.json"
 	await uploadToS3(BUCKET_NAME, "articles_all.json", JSON.stringify(AllArticles));
