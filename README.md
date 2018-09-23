@@ -4,17 +4,22 @@ I love elasticsearch. I love serverless functions. But I love serverless functio
 
 The search algorithm powering the system is [lunrjs](http://lunrjs.com).
 
-## Components
+#### Limitations
+Remember, this is a poorman's elastic search. 
+
+- Great for exposing search for sets of new data and existing data (~50,000 records)
+- More documents can mean slower performance - how much? I don't know yet. Let me know if you do. 
+- AWS Lambda Memory requirements might need to be updated as per dataset
+- This is not a database, it is a search service. You will get results with the reference id only, not the entire document.
+
+### AWS Components
+- S3	
+- Lambda (256mb)
 - API Gateway
-- S3 Bucket
-- DynamoDB
-
-There were a few 
-
 
 ## Getting Started
 
-You may head over to the [Serverless Application Repository](sss) now and deploy the service.
+You may head over to the [Serverless Application Repository](sss) and deploy the service.
 
 You will have to provide two parameters when you deploy:
 
@@ -23,16 +28,26 @@ You will have to provide two parameters when you deploy:
 
 `InternalAPIKey` - This API Key is a secret string. Do not share this key with anyone, it will allow you to change your index configuration
 
-You may use this [postman collection](Postman) and test set up your API routes.
+You may test the API in postman. Be sure to update the BaseURL.
 
-### API Routes
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/c050def4904367e08d45)
+
+Read below for route docs and design.
+
+### Design
+
+![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/Architecture.png)
+
+
+## API Routes
 
 After you deploy, you will end up with a base URL:
 
 `https://${myapi}.execute-api.amazonaws.com/Prod/`
 
+-------------------
 ### POST /internal/config
-Creates an Indexing
+Creates an Index for the articles. You may update this whenever you want to.
 
 
 | body parameters |  definition | 
@@ -45,7 +60,7 @@ Creates an Indexing
 ##### Input
 ```javascript
 {
-    "apikey":"supersecretkey",
+    	"apikey":"supersecretkey",
 	"fields":["title","year","director","year","genre","tldr"],
 	"ref": "id"
 }
@@ -56,9 +71,10 @@ Creates an Indexing
 	"msg":"Document Uploaded!"
 }
 ```
+-------------------
 
 ### POST /add
-Adds a new document to search
+Adds a new article to search
 ##### Input
 ```javascript
 [
@@ -88,16 +104,17 @@ Adds a new document to search
 }
 ```
 
+-------------------
 
 ### GET /search
-Searches all the documents 
+Searches all the articles
 
 ##### Input
 | query parameters |  definition | Example| 
 | ------------- | ------------- |---------|
 | `q`  | query string to be searched  | `/Prod/search?q=titan` |
 
-The default set-up allows for a fuzzy edit distance of two characters. You may tweak the algorithm [here] (https://github.com/rlingineni/Lambda-Serverless-Search/blob/2099d87854b4c7f23eced3214a3141ef66bef95d/document_search/app.js#L173). LunrJS [docs](https://lunrjs.com/guides/searching.html) will also help.
+The default set-up allows for a fuzzy edit distance of two characters. You may tweak the search algorithm [here](https://github.com/rlingineni/Lambda-Serverless-Search/blob/2099d87854b4c7f23eced3214a3141ef66bef95d/document_search/app.js#L173). LunrJS [docs](https://lunrjs.com/guides/searching.html) will also help.
 ##### Response
 ```
     [
@@ -115,9 +132,27 @@ The default set-up allows for a fuzzy edit distance of two characters. You may t
     ]
 ```
 
+-------------------
 
-### Things you may want to do
-- Open API Gateway and make add auth to your routes
-- 
+### GET /internal/config
+Return the schema that is being used to index the documents
+
+##### Response
+```
+    {
+    	"fields":["title","year","director","year","genre","tldr"],
+	"ref": "id"
+    }
+```
+
+-------------------
+
+### Next Steps, Optimizations and Future
+- Change the default internal API key
+- Add Auth to your routes to restrict access
+- Add pagination for large sets of results
+	- might need a temp cache with correleation-id
+- Update to get all S3 Articles via AWS Athena
+- Nightly Batch function to group articles from one day into a large document
 
 
