@@ -31,6 +31,11 @@ You will have to provide two parameters when you deploy:
 
 You may use this [postman collection](Postman) and test the API routes. Make sure to change the URL. Read below for route docs and design.
 
+### Design
+
+![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/Architecture.png)
+
+
 ## API Routes
 
 After you deploy, you will end up with a base URL:
@@ -145,8 +150,4 @@ Return the schema that is being used to index the documents
 - Update to get all S3 Articles via AWS Athena
 - Nightly Batch function to group articles from one day into a large document
 
-
-### Design
-
-![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/Architecture.png)
 
