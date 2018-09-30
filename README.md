@@ -77,7 +77,8 @@ Creates an Index(s) for the articles. You may update this whenever you want to.
 		{
 			"name":"movies",
 			"fields":["title","year","director","year","genre","tldr"],
-			"ref": "id"
+			"ref": "id",
+			"shards": 2000
 		},
 		{	"name":"movies-autocomplete",
 			"fields":["title","year","director","year","genre","tldr"],
