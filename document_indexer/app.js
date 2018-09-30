@@ -8,6 +8,7 @@ exports.lambdaHandler = async (event, context) => {
 
 	let AddedItem = event.Records[0].s3.object.key;
 
+	//no need to index anything that hasn't been added to articles
 	if (!AddedItem.startsWith("articles/")) {
 		return "Skipping the addition of a non-article";
 	}
@@ -41,31 +42,60 @@ exports.lambdaHandler = async (event, context) => {
 		}
 	}
 
+	let IndexUploadPromiseArray = [];
 	//make indexes and upload them
-
 	for (var config of IndexConfig.configs) {
-		//build the index and upload new index
-		var index = lunr(function() {
-			for (var field of config.fields) {
-				this.field(field);
-			}
-			this.ref(config.ref);
-			AllArticles.forEach(function(article) {
-				this.add(article);
-			}, this);
-		});
+		let ShardSize = config.shards || 2000;
+		let shardedArray = ShardArray(AllArticles, ShardSize);
 
-		await uploadToS3(BUCKET_NAME, "search_index_" + config.name + ".json", JSON.stringify(index));
-		console.log("Uploaded index: " + config.name);
+		let indexCount = 1;
+		for (var articles of shardedArray) {
+			//build the index up for each shard and upload new index
+			var index = lunr(function() {
+				for (var field of config.fields) {
+					this.field(field);
+				}
+
+				this.ref(config.ref);
+				articles.forEach(function(article) {
+					this.add(article);
+				}, this);
+			});
+
+			//upload JSON Indexes in Parallel
+			IndexUploadPromiseArray.push(
+				uploadToS3(BUCKET_NAME, "indexes/" + config.name + "/search_index_" + indexCount + ".json", JSON.stringify(index))
+			);
+			console.log("Uploaded index: " + config.name + "_" + indexCount);
+			indexCount++;
+		}
+	}
+
+	try {
+		let UploadResults = await Promise.all(IndexUploadPromiseArray);
+	} catch (e) {
+		console.log("Something went wrong: ", e);
 	}
 
 	/*
-		Keep this all articles document for reference, we will not necessarily use it
+		Keep all articles document for reference, we will not necessarily use it
 	*/
 	//update "alldocs.json"
 	await uploadToS3(BUCKET_NAME, "articles_all.json", JSON.stringify(AllArticles));
 	console.log("Uploaded all articles back!");
 };
+
+function ShardArray(allitems, chunk_size) {
+	var arrays = [];
+
+	let StartIndex = 0;
+	while (StartIndex <= allitems.length) {
+		arrays.push(allitems.slice(StartIndex, StartIndex + chunk_size));
+		StartIndex += chunk_size;
+	}
+
+	return arrays;
+}
 
 /**
  * @param {*} Bucket

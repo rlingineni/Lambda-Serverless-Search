@@ -159,37 +159,98 @@ async function UploadArticle(document) {
 async function SearchForDocument(query, numValues = 25, indexName) {
 	console.log("Searching Index for ", query);
 	if (!indexName || !isValidIndexName(indexName)) {
-		return BuildResponse(400, "Invalid Index Name");
+		return BuildResponse(400, "Invalid Index Name Provided");
 	}
-	//Load Index from S3
+	console.log("Got Request..");
+	let SearchResults = [];
+
+	//Load Multiple Indexes from S3
 	try {
-		var params = {
-			Bucket: BUCKET_NAME,
-			Key: "search_index_" + indexName + ".json"
-		};
-		let data = await s3.getObject(params).promise();
-		let searchIndex = JSON.parse(data.Body);
+		//Fetch all available shards
+		let listOfShards = await listObjects(BUCKET_NAME, "indexes/" + indexName);
+		console.log("Received List of Shards...");
+		let listOfDocumentPromises = [];
+		for (var documentName of listOfShards) {
+			listOfDocumentPromises.push(getIndexJSONFile(BUCKET_NAME, documentName));
+		}
 
-		//load the index to lunr
-		let index = lunr.Index.load(searchIndex);
-		//perform
-		let results = index.query(function() {
-			// exact matches should have the highest boost
-			this.term(lunr.tokenizer(query), { boost: 100 });
+		try {
+			let allIndexes = await Promise.all(listOfDocumentPromises);
+			console.log("Got all Indexes...");
+			for (var index of allIndexes) {
+				if (index != null) {
+					SearchResults = SearchResults.concat(GetSearchResults(index, query, numValues));
+				} else {
+					return BuildResponse(500, "Something went wrong while trying to query the index...");
+				}
+			}
+			console.log("Got search results...");
+		} catch (err) {
+			console.log("Something went wrong while querying the index", err);
+			return BuildResponse(500, "Something went wrong while trying to query the index...");
+		}
 
-			// prefix matches should be boosted slightly
-			this.term(query, { boost: 10, usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING });
-
-			// finally, try a fuzzy search with character 2, without any boost
-			this.term(query, { boost: 5, usePipeline: false, editDistance: 3 });
+		SearchResults.sort(function(hitA, hitB) {
+			return hitB.score - hitA.score;
 		});
 
-		return BuildResponse(200, results.slice(0, numValues), true);
+		console.log("Sending sorted results", SearchResults);
+
+		return BuildResponse(200, SearchResults.slice(0, numValues), true);
 	} catch (err) {
 		console.log("No Search Index was found");
 		console.log(err.message);
 		return BuildResponse(412, "No Search Index was found, or it was invalid. Make sure you have uploaded a index config first.");
 	}
+}
+
+function GetSearchResults(searchIndex, query, numValues) {
+	//load the index to lunr
+	let index = lunr.Index.load(searchIndex);
+	//perform
+	let results = index.query(function() {
+		// exact matches should have the highest boost
+		this.term(lunr.tokenizer(query), { boost: 100 });
+
+		// prefix matches should be boosted slightly
+		this.term(query, { boost: 10, usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING });
+
+		// finally, try a fuzzy search with character 2, without any boost
+		this.term(query, { boost: 5, usePipeline: false, editDistance: 3 });
+	});
+	return results.slice(0, numValues);
+}
+
+/**
+ * @param {*} Bucket
+ * @param {*} Prefix
+ * Return array of all the objects in Bucket or Sub-Path in Bucket
+ */
+async function listObjects(Bucket, Prefix) {
+	let params = {
+		Bucket,
+		Prefix,
+		MaxKeys: 1000
+	};
+
+	let results = [];
+	let isTruncated = true;
+
+	try {
+		while (isTruncated) {
+			//fetch list of all incoming folders
+			let data = await s3.listObjectsV2(params).promise();
+			isTruncated = data.IsTruncated;
+			for (let item of data.Contents) {
+				results.push(item.Key);
+			}
+			params.ContinuationToken = data.NextContinuationToken;
+		}
+	} catch (e) {
+		throw e;
+	}
+
+	return results;
 }
 
 function BuildResponse(statusCode, responseBody, shouldStringify = false) {
@@ -215,4 +276,20 @@ function isValidIndexName(str) {
 	}
 
 	return false;
+}
+
+async function getIndexJSONFile(Bucket, Key, query, numValues) {
+	//fetch previous cache of documents
+	try {
+		var params = {
+			Bucket,
+			Key
+		};
+		let data = await s3.getObject(params).promise();
+		return JSON.parse(data.Body);
+	} catch (err) {
+		console.log(err.message);
+		console.log("Object does not exist...for ", Key);
+		return null;
+	}
 }
