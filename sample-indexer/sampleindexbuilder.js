@@ -6,8 +6,8 @@ const loadFromIndex = false;
 console.time();
 
 if (!loadFromIndex) {
-	// First I want to read the file
-	fs.readFile("./movies.json", function read(err, data) {
+	// First I want to read original file
+	fs.readFile("../movies.json", function read(err, data) {
 		if (err) {
 			throw err;
 		}

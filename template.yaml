@@ -91,29 +91,17 @@ Resources:
                   - bucketName:
                       Ref: TargetBucket
             Effect: Allow
-    Events:
-      DocumentAddedEvent:
-        Type: S3
-        Properties:
-          Bucket: !Ref SearchDocumentsBucket
-          Events: s3:ObjectCreated:*
+      Events:
+        DocumentAddedEvent:
+         Type: S3
+         Properties:
+           Bucket: !Ref SearchDocumentsBucket
+           Events: s3:ObjectCreated:*
   SearchDocumentsBucket:
     Type: "AWS::S3::Bucket"
     Properties:
       BucketName: !Ref TargetBucket
-      NotificationConfiguration:
-        LambdaConfigurations:
-          - Event: "s3:ObjectCreated:*"
-            Function: !GetAtt DocumentIndexingFunction.Arn
-  BucketPermission:
-    Type: AWS::Lambda::Permission
-    Properties:
-      Action: "lambda:InvokeFunction"
-      FunctionName: !GetAtt DocumentIndexingFunction.Arn
-      Principal: s3.amazonaws.com
-      SourceAccount: !Ref "AWS::AccountId"
-      SourceArn: !Sub "arn:aws:s3:::${TargetBucket}"
-
+      
 Outputs:
   DocumentSearchApi:
     Description: "Deployed API Gateway Endpoint URL"

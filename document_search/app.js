@@ -210,7 +210,7 @@ function BuildResponse(statusCode, responseBody, shouldStringify = false) {
 
 function isValidIndexName(str) {
 	if (str) {
-		var re = /^[a-z]+$/g;
+		var re = /^[a-z-]+$/g;
 		return re.test(str);
 	}
 
