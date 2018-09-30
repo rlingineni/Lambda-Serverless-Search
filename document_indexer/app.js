@@ -42,7 +42,6 @@ exports.lambdaHandler = async (event, context) => {
 	}
 
 	//make indexes and upload them
-
 	for (var config of IndexConfig.configs) {
 		//build the index and upload new index
 		var index = lunr(function() {

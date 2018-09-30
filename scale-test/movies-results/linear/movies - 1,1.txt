@@ -1,0 +1,418 @@
+Count: 1 Response Time (ms): 838.0042879999999 For: L4AYhn0j
+Count: 2 Response Time (ms): 1547.5132310000001 For: QTA0Yxnn
+Count: 3 Response Time (ms): 557.3080909999999 For: NvsIibJ1
+Count: 4 Response Time (ms): 595.1360909999994 For: 1KSb0FcD
+Count: 5 Response Time (ms): 868.2393919999995 For: nMOfbp5G
+Count: 6 Response Time (ms): 1061.090725000001 For: aDhI1RY3
+Count: 7 Response Time (ms): 1225.5076080000017 For: wDGJPupR
+Count: 8 Response Time (ms): 2446.671116999998 For: jCccE0BG
+Count: 9 Response Time (ms): 1380.5258740000027 For: DldlZywv
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18840-----------------
+Count: 1 Response Time (ms): 1647.4565169999987 For: ummbzOir
+Count: 2 Response Time (ms): 1354.1405059999997 For: xweawpqx
+Count: 3 Response Time (ms): 1083.1025390000032 For: smS5gb8f
+Count: 4 Response Time (ms): 805.1862499999952 For: TvSgINFc
+Count: 5 Response Time (ms): 1165.2486329999992 For: NfizYjla
+Count: 6 Response Time (ms): 1001.0187330000008 For: hux3riVs
+Count: 7 Response Time (ms): 1020.9275549999984 For: 6yXNtp8E
+Count: 8 Response Time (ms): 1081.4488630000014 For: Z0dPBu9w
+Count: 9 Response Time (ms): 1152.7164989999983 For: u656LJnJ
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18831-----------------
+Count: 1 Response Time (ms): 1470.9067040000045 For: 2pJ2gcdB
+Count: 2 Response Time (ms): 1045.2580090000047 For: p8I9z6PC
+Count: 3 Response Time (ms): 1205.572920999999 For: 9d4aTf3F
+Count: 4 Response Time (ms): 1097.7072199999966 For: n9W5ELak
+Count: 5 Response Time (ms): 1881.8048560000097 For: cC7QKRNd
+Count: 6 Response Time (ms): 4187.175882999989 For: eWaGUZc2
+Count: 7 Response Time (ms): 1504.5272980000009 For: 1R10J5mR
+Count: 8 Response Time (ms): 2841.9020819999932 For: JMJ4qkUK
+Count: 9 Response Time (ms): 1533.5038940000013 For: Fc1rn81O
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18822-----------------
+Count: 1 Response Time (ms): 1327.7358989999993 For: o3B4zUyf
+Count: 2 Response Time (ms): 1634.7867400000032 For: kt7bvWA8
+Count: 3 Response Time (ms): 1700.8026640000026 For: 9swPRU75
+Count: 4 Response Time (ms): 1492.5462560000087 For: cVAp67Fk
+Count: 5 Response Time (ms): 1378.496484999996 For: 63JytW4E
+Count: 6 Response Time (ms): 1535.778157000008 For: wzS5ewjg
+Count: 7 Response Time (ms): 1731.8481930000053 For: PTxy29yc
+Count: 8 Response Time (ms): 1479.6530710000006 For: BPbWgf5p
+Count: 9 Response Time (ms): 1872.4167229999948 For: 8DrlgPYz
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18813-----------------
+Count: 1 Response Time (ms): 2242.34537499999 For: h8vXqZTE
+Count: 2 Response Time (ms): 2721.9797760000074 For: i4Zp7NXN
+Count: 3 Response Time (ms): 1507.9402440000122 For: xxCxu57F
+Count: 4 Response Time (ms): 1751.0072690000088 For: AhNF4pPG
+Count: 5 Response Time (ms): 1939.998059999998 For: Oi6U08BN
+Count: 6 Response Time (ms): 2680.3485900000087 For: XZsELhyp
+Count: 7 Response Time (ms): 1856.2146930000017 For: GIZmUpcC
+Count: 8 Response Time (ms): 2065.2865600000223 For: BVj5l35K
+Count: 9 Response Time (ms): 1877.0974489999644 For: FBposSzP
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18804-----------------
+Count: 1 Response Time (ms): 2995.886498000036 For: BzRwjiAX
+Count: 2 Response Time (ms): 1730.0744919999997 For: JlTbSbOY
+Count: 3 Response Time (ms): 2168.376139999964 For: yDiUoRf0
+Count: 4 Response Time (ms): 2144.7787460000254 For: naXTko6Y
+Count: 5 Response Time (ms): 2261.015951999987 For: 7Hullk16
+Count: 6 Response Time (ms): 1879.1392339999875 For: MGeK5VZY
+Count: 7 Response Time (ms): 2405.557672999974 For: Mpc8yNAX
+Count: 8 Response Time (ms): 2145.002160999953 For: n1sdDo9K
+Count: 9 Response Time (ms): 2169.3155030000053 For: wMN6feEj
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18795-----------------
+Count: 1 Response Time (ms): 2227.133016999971 For: 5VPwYtdF
+Count: 2 Response Time (ms): 2646.4689700000454 For: O2N6C9Kl
+Count: 3 Response Time (ms): 2640.7431579999975 For: loiMCEtE
+Count: 4 Response Time (ms): 1933.208064999999 For: VBBDcbNT
+Count: 5 Response Time (ms): 2390.1610850000434 For: WIkaQjh4
+Count: 6 Response Time (ms): 2042.3644500000082 For: 46RSFbaA
+Count: 7 Response Time (ms): 2032.349543999997 For: rLShBvel
+Count: 8 Response Time (ms): 2272.469150999983 For: zlrUBCBR
+Count: 9 Response Time (ms): 2167.4444839999924 For: E0YFI3Sw
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18786-----------------
+Count: 1 Response Time (ms): 2454.309755000053 For: PcsA276q
+Count: 2 Response Time (ms): 2061.461980000022 For: rRgpkrXM
+Count: 3 Response Time (ms): 2687.3852919999626 For: NtBdb80j
+Count: 4 Response Time (ms): 2250.320441000018 For: SxIVWlSU
+Count: 5 Response Time (ms): 2291.404605000018 For: w1NlWIAN
+Count: 6 Response Time (ms): 2213.4489950000134 For: 5NW6ExeT
+Count: 7 Response Time (ms): 2521.315936000028 For: HGWvd1TV
+Count: 8 Response Time (ms): 3080.534426999977 For: VbCYpKWa
+Count: 9 Response Time (ms): 2396.1845810000377 For: ZMdqTUzI
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18777-----------------
+Count: 1 Response Time (ms): 2657.431440000015 For: QXepDd9p
+Count: 2 Response Time (ms): 2206.3086449999537 For: SZNoxptN
+Count: 3 Response Time (ms): 2036.8310549999878 For: SCaeebV4
+Count: 4 Response Time (ms): 2439.9414989999786 For: skCUSxrp
+Count: 5 Response Time (ms): 2682.343807999976 For: pAUQB4jB
+Count: 6 Response Time (ms): 2906.6487350000534 For: yu7sC3HP
+Count: 7 Response Time (ms): 2176.102577999962 For: J6FGaw9Q
+Count: 8 Response Time (ms): 2405.769033999997 For: 1dr6xvYG
+Count: 9 Response Time (ms): 2797.179632000014 For: THEZDlYO
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18768-----------------
+Count: 1 Response Time (ms): 2473.3936220000032 For: sSlIkoQo
+Count: 2 Response Time (ms): 3454.8923230000655 For: O7QccuMT
+Count: 3 Response Time (ms): 2336.3689159999776 For: WE8gXz1t
+Count: 4 Response Time (ms): 3324.6540969999915 For: jec9WiVf
+Count: 5 Response Time (ms): 2383.5500789999787 For: cgfUXtmV
+Count: 6 Response Time (ms): 2283.7603460000537 For: swREmqZ5
+Count: 7 Response Time (ms): 2794.0640070000372 For: dwwetb5a
+Count: 8 Response Time (ms): 3613.8356699999713 For: zBKeJNPx
+Count: 9 Response Time (ms): 2304.6178479999944 For: mRSlqRyz
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18759-----------------
+Count: 1 Response Time (ms): 2746.601210999972 For: 48MB0BCX
+Count: 2 Response Time (ms): 2901.4125490000297 For: shSPZSmb
+Count: 3 Response Time (ms): 2392.2327669999795 For: 6oAYdk24
+Count: 4 Response Time (ms): 2498.061125999957 For: ZGwVXJGo
+Count: 5 Response Time (ms): 2758.2586759999103 For: D3hUh1xp
+Count: 6 Response Time (ms): 2441.016406000039 For: udImd8Go
+Count: 7 Response Time (ms): 2885.476042000082 For: KwNCAdny
+Count: 8 Response Time (ms): 2825.6463979999535 For: Xwmjm0bt
+Count: 9 Response Time (ms): 2391.098563000036 For: SpsmxXrB
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18750-----------------
+Count: 1 Response Time (ms): 3737.427398 For: ZWBQGAIO
+Count: 2 Response Time (ms): 2413.7091120000114 For: o3dNdJoA
+Count: 3 Response Time (ms): 2608.162010000058 For: 4IifsTCf
+Count: 4 Response Time (ms): 2675.9133069999807 For: zN6cLGLf
+Count: 5 Response Time (ms): 2553.013663999969 For: mwtpZigs
+Count: 6 Response Time (ms): 2718.917149999994 For: PzY2rFe8
+Count: 7 Response Time (ms): 3027.950142000045 For: 2ZCKeHy4
+Count: 8 Response Time (ms): 3445.323476999998 For: JIjab7Ax
+Count: 9 Response Time (ms): 3087.3718250000093 For: 4VxiBUZP
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18741-----------------
+Count: 1 Response Time (ms): 2511.079667000042 For: IYpm7x8U
+Count: 2 Response Time (ms): 2661.000711999892 For: DYvY8YKZ
+Count: 3 Response Time (ms): 2467.1968550000456 For: 6h7AUWAw
+Count: 4 Response Time (ms): 2538.161509999947 For: o9u583gy
+Count: 5 Response Time (ms): 2657.492460999987 For: XfZGYA4H
+Count: 6 Response Time (ms): 2429.0063310000114 For: gWm8CIK1
+Count: 7 Response Time (ms): 2941.8367669999134 For: foFrnEGZ
+Count: 8 Response Time (ms): 2876.0722589999787 For: arOJPakN
+Count: 9 Response Time (ms): 2611.6206269999966 For: SpFsWguK
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18732-----------------
+Count: 1 Response Time (ms): 2991.1761580000166 For: UuLKYByp
+Count: 2 Response Time (ms): 3000.7782370000496 For: g6xJpAtZ
+Count: 3 Response Time (ms): 2479.420439000125 For: S8XaxMm1
+Count: 4 Response Time (ms): 2567.829710999911 For: pdhxk5Kl
+Count: 5 Response Time (ms): 2675.0585539999884 For: FlcfsC6E
+Count: 6 Response Time (ms): 3219.3407479998423 For: AJcCVASx
+Count: 7 Response Time (ms): 2815.990017000062 For: MqTfjSQa
+Count: 8 Response Time (ms): 2848.069932000013 For: vzpbmKrK
+Count: 9 Response Time (ms): 2891.1571039999253 For: iUpQaHHC
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18723-----------------
+Count: 1 Response Time (ms): 3168.1395829998655 For: BUTkeeLq
+Count: 2 Response Time (ms): 2594.6084739999496 For: vlIPvB2z
+Count: 3 Response Time (ms): 3352.3628479999606 For: hIbFZTd0
+Count: 4 Response Time (ms): 3075.916344999976 For: 8wVDxtJy
+Count: 5 Response Time (ms): 3080.1655239999527 For: nXq3tsPU
+Count: 6 Response Time (ms): 2994.4892550000222 For: yvmNmR30
+Count: 7 Response Time (ms): 3118.514685000002 For: 0xaWgJUx
+Count: 8 Response Time (ms): 3064.9742289999267 For: NTMdGxJa
+Count: 9 Response Time (ms): 3716.7106190000195 For: j54dqqCY
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18714-----------------
+Count: 1 Response Time (ms): 2665.11134199996 For: GYR7EEoQ
+Count: 2 Response Time (ms): 3251.55336900003 For: PmyD81ys
+Count: 3 Response Time (ms): 2769.4488539999584 For: M4qKIYnW
+Count: 4 Response Time (ms): 2896.080653000099 For: oGCycwCR
+Count: 5 Response Time (ms): 3048.840713999991 For: D3oTYmT6
+Count: 6 Response Time (ms): 2506.7456919999095 For: brLrldS6
+Count: 7 Response Time (ms): 2805.0759410000173 For: 0XOzbkCN
+Count: 8 Response Time (ms): 2581.7067810000153 For: r2K6HDic
+Count: 9 Response Time (ms): 2909.0799350001034 For: QwmPfoll
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18705-----------------
+Count: 1 Response Time (ms): 3080.4197820000118 For: PYOuaOCz
+Count: 2 Response Time (ms): 2873.9869399999734 For: DvjQwS7Q
+Count: 3 Response Time (ms): 2873.989850999962 For: FptvUfOS
+Count: 4 Response Time (ms): 4095.128934999986 For: JUBTgUyQ
+Count: 5 Response Time (ms): 3467.2185460000765 For: CXsghs3C
+Count: 6 Response Time (ms): 4009.932480000076 For: Bqkj30ux
+Count: 7 Response Time (ms): 4398.804160000116 For: fDF8OH0k
+Count: 8 Response Time (ms): 3071.6830349999364 For: OxeULw4q
+Count: 9 Response Time (ms): 3220.7500890000956 For: hgBAc1xz
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18696-----------------
+Count: 1 Response Time (ms): 3045.5047849999974 For: jXVimUgg
+Count: 2 Response Time (ms): 3397.634108999977 For: 3EREqlin
+Count: 3 Response Time (ms): 2915.524366000085 For: yBywj1xX
+Count: 4 Response Time (ms): 2719.655909000081 For: ewH0Se3m
+Count: 5 Response Time (ms): 2902.433175000071 For: xoGxy495
+Count: 6 Response Time (ms): 2603.082228000043 For: bxw2MtvT
+Count: 7 Response Time (ms): 3768.8531659999862 For: 5sI3F3R6
+Count: 8 Response Time (ms): 3564.164635000052 For: csmrH79e
+Count: 9 Response Time (ms): 3373.0827450000797 For: 9WuIu5Bb
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18687-----------------
+Count: 1 Response Time (ms): 3240.287211000046 For: iWCS1xgI
+Count: 2 Response Time (ms): 2819.539930000028 For: H1my17bi
+Count: 3 Response Time (ms): 3391.2379619999556 For: Ae2MJGSo
+Count: 4 Response Time (ms): 5366.3750070001115 For: UZf7Q2OW
+Count: 5 Response Time (ms): 3354.903779000044 For: vB00sHAe
+Count: 6 Response Time (ms): 3391.9642380001023 For: 4VsDzmSS
+Count: 7 Response Time (ms): 3037.3317540000426 For: SfcQYY4O
+Count: 8 Response Time (ms): 2882.3018359999405 For: 0mAyJeEL
+Count: 9 Response Time (ms): 3246.067914000014 For: nhGxPLp9
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18678-----------------
+Count: 1 Response Time (ms): 3170.132179999957 For: wd1dGy5W
+Count: 2 Response Time (ms): 3194.211947999953 For: o8b4wfrl
+Count: 3 Response Time (ms): 3170.2894339999184 For: AwaNkf2x
+Count: 4 Response Time (ms): 4879.768370000005 For: JkHTmqx6
+Count: 5 Response Time (ms): 4623.147480999876 For: 13sY8QBp
+Count: 6 Response Time (ms): 2964.0303199999616 For: h1XUzDdv
+Count: 7 Response Time (ms): 3377.4668269999092 For: D1R19Lvb
+Count: 8 Response Time (ms): 16821.384470999998 For: hxoHnexU
+Count: 9 Response Time (ms): 3816.500924000051 For: 2E0MJA59
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18669-----------------
+Count: 1 Response Time (ms): 3469.0709239998832 For: 7ErBGMOb
+Count: 2 Response Time (ms): 3543.5582099998137 For: qvrzPdGm
+Count: 3 Response Time (ms): 3646.632666000165 For: fXeNbChZ
+Count: 4 Response Time (ms): 2921.070487000048 For: oQmYohmJ
+Count: 5 Response Time (ms): 3477.2394809998805 For: gPwklZZC
+Count: 6 Response Time (ms): 3066.678258000058 For: iLGfN52B
+Count: 7 Response Time (ms): 2759.7522410000674 For: 8gj4sX6c
+Count: 8 Response Time (ms): 4061.164648000151 For: yI3YJhf9
+Count: 9 Response Time (ms): 3597.516894999775 For: SkAkhteV
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18660-----------------
+Count: 1 Response Time (ms): 4435.957006000099 For: Vb5FteuO
+Count: 2 Response Time (ms): 4187.035458000144 For: UDrPw0jp
+Count: 3 Response Time (ms): 3687.086935000145 For: jS9Gb0tJ
+Count: 4 Response Time (ms): 3147.88227700023 For: z9CMFYrZ
+Count: 5 Response Time (ms): 3920.3908919997048 For: 5AwYTNM7
+Count: 6 Response Time (ms): 3129.3991460000398 For: ZxSuPfnt
+Count: 7 Response Time (ms): 3459.2003939999267 For: QMgaBOwV
+Count: 8 Response Time (ms): 3504.289168000105 For: PvSpoCZ7
+Count: 9 Response Time (ms): 4911.107000999968 For: 2u7PItZR
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18651-----------------
+Count: 1 Response Time (ms): 3298.08989199996 For: jacCHIRU
+Count: 2 Response Time (ms): 3498.979902999825 For: Ssu0j7OL
+Count: 3 Response Time (ms): 2761.6866610001307 For: W4Mk8uZj
+Count: 4 Response Time (ms): 4776.467428000178 For: tBUi4TAw
+Count: 5 Response Time (ms): 4475.53310599993 For: 5QUf4RSv
+Count: 6 Response Time (ms): 3022.7368979998864 For: I9X5gVWt
+Count: 7 Response Time (ms): 2965.310041000019 For: GVcMXu9s
+Count: 8 Response Time (ms): 3477.5847159998957 For: grbdEi9n
+Count: 9 Response Time (ms): 3566.173869999824 For: DXmlo2o1
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18642-----------------
+Count: 1 Response Time (ms): 3375.077644999721 For: yDGAJQha
+Count: 2 Response Time (ms): 4601.980135999969 For: S9wQooQw
+Count: 3 Response Time (ms): 4541.608272000216 For: vWIWDfFd
+Count: 4 Response Time (ms): 3401.122862000135 For: spIDV4rD
+Count: 5 Response Time (ms): 5329.272964999895 For: TbEvNCkF
+Count: 6 Response Time (ms): 3885.494000999839 For: WN32XHUN
+Count: 7 Response Time (ms): 3792.912695000181 For: VtfEv8gd
+Count: 8 Response Time (ms): 4972.28820900002 For: VTp8w6xX
+Count: 9 Response Time (ms): 3657.2532219997374 For: uteUreIN
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18633-----------------
+Count: 1 Response Time (ms): 4720.6426330000395 For: lL4VdHrL
+Count: 2 Response Time (ms): 4145.534971000045 For: xE1TOph9
+Count: 3 Response Time (ms): 4616.3343639997765 For: fLLn3JuR
+Count: 4 Response Time (ms): 4055.1170929998625 For: uJPCRW8m
+Count: 5 Response Time (ms): 4097.564088000101 For: ZzWDIZmx
+Count: 6 Response Time (ms): 3628.28784600005 For: 3uRRuEqb
+Count: 7 Response Time (ms): 4007.777606999851 For: EqzjNw5O
+Count: 8 Response Time (ms): 3604.991945000016 For: Un4XkTCa
+Count: 9 Response Time (ms): 3282.695576000144 For: kEz1GPlV
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18624-----------------
+Count: 1 Response Time (ms): 3886.4737559998175 For: sHBnshcd
+Count: 2 Response Time (ms): 4419.277577999979 For: Rr0SpjGC
+Count: 3 Response Time (ms): 3700.875534000108 For: qjVxmHjc
+Count: 4 Response Time (ms): 3762.521386999637 For: KLiGJEBF
+Count: 5 Response Time (ms): 4085.2085210001096 For: FUUm2ARa
+Count: 6 Response Time (ms): 3764.3558479996864 For: TbdC29ER
+Count: 7 Response Time (ms): 3578.4318909998983 For: SpMY92qE
+Count: 8 Response Time (ms): 3702.8444779999554 For: nqk2i6sP
+Count: 9 Response Time (ms): 3839.4701750001404 For: qhoMPzaV
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18615-----------------
+Count: 1 Response Time (ms): 3884.8486089999788 For: oITvWS6F
+Count: 2 Response Time (ms): 3947.5243069998687 For: rqdnny7e
+Count: 3 Response Time (ms): 3883.7057560001267 For: 4wvbNfPH
+Count: 4 Response Time (ms): 3680.763234999962 For: 5l6C4jkK
+Count: 5 Response Time (ms): 3783.5867879998405 For: zQ0r0V1G
+Count: 6 Response Time (ms): 5568.3162339995615 For: 1jrRc2Ke
+Count: 7 Response Time (ms): 5358.983100999729 For: hEUsWSIQ
+Count: 8 Response Time (ms): 5047.278473000042 For: vk9o7nCa
+Count: 9 Response Time (ms): 3883.7480710000964 For: BGWIehtk
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18606-----------------
+Count: 1 Response Time (ms): 4256.7616759999655 For: y9kvJRUe
+Count: 2 Response Time (ms): 4162.711922000279 For: sMiLAoqY
+Count: 3 Response Time (ms): 5013.531063999864 For: 5hCwOFvf
+Count: 4 Response Time (ms): 3855.9126860001124 For: Olw8J28M
+Count: 5 Response Time (ms): 4007.767186999903 For: mO9Qj0LR
+Count: 6 Response Time (ms): 4805.686094000004 For: PMOpRkYQ
+Count: 7 Response Time (ms): 4869.3528900000965 For: mkuedqzy
+Count: 8 Response Time (ms): 4993.601753999828 For: QF5zp4kX
+Count: 9 Response Time (ms): 3727.251275999937 For: 3N2qMzeC
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18597-----------------
+Count: 1 Response Time (ms): 4394.143112000078 For: SomRh56M
+Count: 2 Response Time (ms): 5606.115575999953 For: 0vT8g7fM
+Count: 3 Response Time (ms): 3580.238929000101 For: qzmzz0qq
+Count: 4 Response Time (ms): 3994.212544000009 For: AXi31TIp
+Count: 5 Response Time (ms): 4267.806045999867 For: ivha0fZe
+Count: 6 Response Time (ms): 4983.469736999716 For: BZuPJJWB
+Count: 7 Response Time (ms): 3772.9428310001967 For: J5qtYsOZ
+Count: 8 Response Time (ms): 4827.110351000214 For: 8EYnx2m2
+Count: 9 Response Time (ms): 4243.261218999978 For: EcId6LbJ
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18588-----------------
+Count: 1 Response Time (ms): 5828.616986999987 For: 5qDaf51z
+Count: 2 Response Time (ms): 4603.79822300002 For: 90zTy0RR
+Count: 3 Response Time (ms): 4034.58230800007 For: 67Q3ytPv
+Count: 4 Response Time (ms): 3814.8801809998695 For: yxuHc8Ud
+Count: 5 Response Time (ms): 4039.558997000102 For: DxkIyjIF
+Count: 6 Response Time (ms): 3887.3238539999584 For: wNANpoyV
+Count: 7 Response Time (ms): 5262.889454000164 For: Ktw5uE4O
+Count: 8 Response Time (ms): 4515.075710000005 For: sLtLriag
+Count: 9 Response Time (ms): 5321.919461000129 For: 0jXOIj2d
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18579-----------------
+Count: 1 Response Time (ms): 8382.626600000076 For: pO1BaRyo
+Count: 2 Response Time (ms): 4744.192897000001 For: wNU6Y42A
+Count: 3 Response Time (ms): 4127.503282999853 For: W703m9sg
+Count: 4 Response Time (ms): 3862.8091189997504 For: 3imwpyDF
+Count: 5 Response Time (ms): 4230.833611999988 For: Kjj6pQ8p
+Count: 6 Response Time (ms): 4419.517872999888 For: mAXH7FRr
+Count: 7 Response Time (ms): 4295.18186199991 For: lufMoaPm
+Count: 8 Response Time (ms): 5814.4982720001135 For: ZCJ16pIv
+Count: 9 Response Time (ms): 4397.421001000097 For: CaZosZ46
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18570-----------------
+Count: 1 Response Time (ms): 5269.42719099985 For: ELu8BtQf
+Count: 2 Response Time (ms): 6579.1546009999 For: ZdXg0RaE
+Count: 3 Response Time (ms): 3860.648073000135 For: jLmD5zzt
+Count: 4 Response Time (ms): 4705.699753999943 For: LWVGZilf
+Count: 5 Response Time (ms): 4640.826425999985 For: SLzL7Ri3
+Count: 6 Response Time (ms): 5115.5377190000145 For: i9undnAy
+Count: 7 Response Time (ms): 3915.984403999988 For: PUeDunYw
+Count: 8 Response Time (ms): 4046.183212999953 For: vf9o0RJs
+Count: 9 Response Time (ms): 3841.5665839998983 For: tDMdUHqt
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18561-----------------
+Count: 1 Response Time (ms): 3799.583180999849 For: aoVfWFuy
+Count: 2 Response Time (ms): 4295.0977280000225 For: Vui7zQaf
+Count: 3 Response Time (ms): 3932.1460469999583 For: YRSDZlj4
+Count: 4 Response Time (ms): 6549.229441999923 For: U4XhViYg
+Count: 5 Response Time (ms): 6674.561607000069 For: oEYSqII9
+Count: 6 Response Time (ms): 6611.052833000314 For: y5P7h8DG
+Count: 7 Response Time (ms): 5666.70692500053 For: riDe4J6h
+Count: 8 Response Time (ms): 5547.582305999938 For: 7J3T7ZZ7
+Count: 9 Response Time (ms): 5022.090755000012 For: SC3NuWwk
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18552-----------------
+Count: 1 Response Time (ms): 4640.32385499985 For: FJa7q30B
+Count: 2 Response Time (ms): 5013.655858000973 For: vFnISFiM
+Count: 3 Response Time (ms): 7186.474578000139 For: wyMfqepZ
+Count: 4 Response Time (ms): 6056.408592000138 For: 87kKffpz
+Count: 5 Response Time (ms): 4165.424934999552 For: F2Rwh2jJ
+Count: 6 Response Time (ms): 3923.0093390000984 For: klRBOd7M
+Count: 7 Response Time (ms): 3885.8139859999064 For: nNagCxLr
+Count: 8 Response Time (ms): 5014.100276000099 For: kPsrLvRR
+Count: 9 Response Time (ms): 3786.8563779999968 For: ViGPSHMP
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18543-----------------
+Count: 1 Response Time (ms): 5114.003055999754 For: 1bS4m3VM
+Count: 2 Response Time (ms): 5420.201494000154 For: nxS1R7lP
+Count: 3 Response Time (ms): 4641.918385000434 For: ScQyeH9d
+Count: 4 Response Time (ms): 4806.610156000359 For: MSH8jQak
+Count: 5 Response Time (ms): 5422.096483000554 For: g7zn4aiL
+Count: 6 Response Time (ms): 5728.743727999972 For: c0Exqzws
+Count: 7 Response Time (ms): 4602.336438999977 For: G5zBJkmb
+Count: 8 Response Time (ms): 5030.279955999926 For: BF9DRPE9
+Count: 9 Response Time (ms): 5380.701969999587 For: Po377VkN
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18534-----------------
+Count: 1 Response Time (ms): 4724.412599000381 For: RXDrixiA
+Count: 2 Response Time (ms): 4909.7264839997515 For: xavzh4EF
+Count: 3 Response Time (ms): 5355.248884999892 For: QJy8jhfc
+Count: 4 Response Time (ms): 4702.113994999789 For: YzAbVurf
+Count: 5 Response Time (ms): 5624.441702000098 For: nCY3087S
+Count: 6 Response Time (ms): 5085.5336010002065 For: xA7aaf9a
+Count: 7 Response Time (ms): 5115.211619999958 For: Q2A9xVIA
+Count: 8 Response Time (ms): 4628.443979999982 For: GgO4IORi
+Count: 9 Response Time (ms): 4802.975035000127 For: 3n2ASXu9
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18525-----------------
+Count: 1 Response Time (ms): 5011.981979999691 For: vnDlMHBp
+Count: 2 Response Time (ms): 4647.338936999673 For: QSNnHw9z
+Count: 3 Response Time (ms): 4654.557581000263 For: RsRLcHi4
+Count: 4 Response Time (ms): 4808.056502999738 For: pOieofsE
+Count: 5 Response Time (ms): 4704.374500000151 For: 4Sh4u3I6
+Count: 6 Response Time (ms): 5147.505742999725 For: 7n4D2RSM
+Count: 7 Response Time (ms): 7478.668454000261 For: dv3nKOLc
+Count: 8 Response Time (ms): 4650.119937000098 For: lHB9YfC1
+Count: 9 Response Time (ms): 6444.908098000335 For: 9BaDjXqe
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18516-----------------
+Count: 1 Response Time (ms): 5729.089275999926 For: kJfWS6Ay
+Count: 2 Response Time (ms): 5419.908292999724 For: Pa27xm6z
+Count: 3 Response Time (ms): 5217.43897300004 For: yd68oHYO
+Count: 4 Response Time (ms): 5180.1262540000025 For: 5XQWtfql
+Count: 5 Response Time (ms): 5758.7306789997965 For: CnxrKC4R
+Count: 6 Response Time (ms): 5318.644033999881 For: lWRy7Ovh
+Count: 7 Response Time (ms): 4926.53016100009 For: bkqyBOSr
+Count: 8 Response Time (ms): 5319.078200999647 For: TstfB4xv
+Count: 9 Response Time (ms): 5378.575802000007 For: QYgG9IJn
+-----------Batch Count Incremented to: 1-----------------
+-----------Articles Remaining: 18507-----------------

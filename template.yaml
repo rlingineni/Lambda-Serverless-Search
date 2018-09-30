@@ -101,7 +101,8 @@ Resources:
     Type: "AWS::S3::Bucket"
     Properties:
       BucketName: !Ref TargetBucket
-      
+
+
 Outputs:
   DocumentSearchApi:
     Description: "Deployed API Gateway Endpoint URL"
