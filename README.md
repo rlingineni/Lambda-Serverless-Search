@@ -10,7 +10,7 @@ Remember, this is a poorman's elastic search.
 - Great for exposing search for sets of new data and existing data
 - Can be used to perform autocompletes
 - Use as a lite api before migrating to a full scale search solution
-- More documents can mean slower performance - how much? I don't know yet. Let me know if you do. 
+- More documents can mean slower performance - how much? Below I've noted my [performance](#performance) observations
 - AWS Lambda Memory requirements might need to be updated as per dataset
 - This is not a database, it is a search service. You will get results with the reference id only, not the entire document.
 
@@ -68,6 +68,7 @@ Creates an Index(s) for the articles. You may update this whenever you want to.
 | `fields`  | Array of strings with the name of attributes that are to be indexed in document| `yes`|
 | `name`  | The name of the index| `yes`|
 | `ref`  | The ref is one field that will be returned. Most people use an ID, that they can later lookup in a DB or other store|`yes`|
+| `shards`  |An "index" is broken up into smaller indexes. Depending on the size of each article, you may tune this number. An indexes by default is sharded at 2000 shards |`no`|
 
 ##### Input
 ```javascript
@@ -77,7 +78,8 @@ Creates an Index(s) for the articles. You may update this whenever you want to.
 		{
 			"name":"movies",
 			"fields":["title","year","director","year","genre","tldr"],
-			"ref": "id"
+			"ref": "id",
+			"shards": 1000
 		},
 		{	"name":"movies-autocomplete",
 			"fields":["title","year","director","year","genre","tldr"],
@@ -177,13 +179,31 @@ Return the schema that is being used to index the documents
 ```
 
 -------------------
+## Performance 
+Here are some notes on performance that I have studied:
+
+Lambda memory allocation has a huge impact!
+
+### DocumentSearchFunction:
+- All search indexes are loaded in parallel to improve concurrency
+- The higher the memory for a Lambda function, the more the compute power, hence faster index searching. (you can see up to  **75% increase** in speed), just adjust the slider.
+
+### DocumentIndexingFunction:
+- The lower the number of *individual* articles, the faster the indexing time
+- You may see my `scale test` folder in the code above. It checks how long it takes to see a record appear in the results after it's uploaded. Latency of indexing operations degrades to about 30X over the course of 12K records. 
+- Bulk uploads tend to decrease the amount of time
+- The higher the memory for a Lambda function, the more the compute power, hence faster index building
+	
+	
+
+
+
 ### Next Steps, Optimizations and Future
 
 - Add pagination for large sets of results
-	- might need a temp cache with correleation-id
+- might need a temp cache with correleation-id
 - Update to get all S3 Articles via AWS Athena
 - Use Cloudfront with S3 to cache the index document
-- For Multiple indexes, support a seperate index file locations away from one large shared folder
 - Nightly Batch function to group articles from one day into a large document
 - Add Cache to keep track of most popular results in order to dynamically perform result boosts
 
