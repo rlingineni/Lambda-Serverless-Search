@@ -137,10 +137,11 @@ Adds a new article to search
 Searches all the articles
 
 ##### Input
-| query parameters |  definition | Example| 
+| query parameters |type|  definition | Example| 
 | ------------- | ------------- |---------|
-| `q`  | query string to be searched  | `/Prod/search?q=titan&index=ids` |
-| `index`  | index to be used | `/Prod/search?q=get&index=autocomplete` |
+| `q`  |`required` |query string to be searched  | `/Prod/search?q=titan&index=ids` |
+| `index`  | `required`|index to be used | `/Prod/search?q=get&index=autocomplete` |
+| `count`  | `optional`|count of search result to return. **Default:** 25 | `/Prod/search?q=get&index=autocomplete&count=50` |
 
 Both parameters are required.
 
