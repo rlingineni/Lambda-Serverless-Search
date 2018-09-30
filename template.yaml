@@ -97,6 +97,39 @@ Resources:
          Properties:
            Bucket: !Ref SearchDocumentsBucket
            Events: s3:ObjectCreated:*
+  DocumentBatchingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: document_batch
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Policies: AWSLambdaExecute
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          BUCKET_NAME: !Ref TargetBucket
+      Policies:
+      - Statement:
+          - Action:
+              - s3:GetObject
+              - s3:ListBucket
+              - s3:PutObject
+              - s3:GetLifecycleConfiguration
+              - s3:PutLifecycleConfiguration
+            Resource:
+              - Fn::Sub:
+                  - arn:${AWS::Partition}:s3:::${bucketName}
+                  - bucketName:
+                      Ref: TargetBucket
+              - Fn::Sub:
+                  - arn:${AWS::Partition}:s3:::${bucketName}/*
+                  - bucketName:
+                      Ref: TargetBucket
+            Effect: Allow
+      Events:
+        DocumentBatchEvent:
+         Type: Schedule
+         Properties:
+           Schedule: rate(5 minutes)        
   SearchDocumentsBucket:
     Type: "AWS::S3::Bucket"
     Properties:
@@ -112,8 +145,12 @@ Outputs:
     Value: !GetAtt DocumentSearchFunction.Arn
 
   DocumentIndexingFunction:
-    Description: "Serverless Document Search Function ARN"
+    Description: "Serverless Document Search Indexing Function ARN"
     Value: !GetAtt DocumentIndexingFunction.Arn
+
+  DocumentBatchingFunction:
+    Description: "Serverless Document Search Batching Function ARN"
+    Value: !GetAtt DocumentBatchingFunction.Arn
 
   DocumentCollectionBucket:
     Description: "S3 Bucket for all uploaded documents and indexing information"
