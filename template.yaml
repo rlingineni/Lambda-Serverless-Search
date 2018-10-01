@@ -14,7 +14,7 @@ Parameters:
 Globals:
   Function:
     Timeout: 60
-    MemorySize: 320
+    MemorySize: 1024
 
 Resources:
   DocumentSearchFunction:
