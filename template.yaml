@@ -13,8 +13,8 @@ Parameters:
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 30
-    MemorySize: 256
+    Timeout: 60
+    MemorySize: 320
 
 Resources:
   DocumentSearchFunction:
@@ -141,15 +141,15 @@ Outputs:
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
 
   DocumentSearchFunction:
-    Description: "Serverless Document API Search Function ARN"
+    Description: "Serverless Document API - Search Function ARN"
     Value: !GetAtt DocumentSearchFunction.Arn
 
   DocumentIndexingFunction:
-    Description: "Serverless Document Search Indexing Function ARN"
+    Description: "Serverless Document Search - Indexing Function ARN"
     Value: !GetAtt DocumentIndexingFunction.Arn
 
   DocumentBatchingFunction:
-    Description: "Serverless Document Search Batching Function ARN"
+    Description: "Serverless Document Search - Batching Function ARN"
     Value: !GetAtt DocumentBatchingFunction.Arn
 
   DocumentCollectionBucket:
