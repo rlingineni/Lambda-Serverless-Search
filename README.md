@@ -181,13 +181,11 @@ Return the schema that is being used to index the documents
 ## Performance 
 Here are some graphs on performance that I have done. It's not going to win any races, or even come close to algolia or elasticsearch. The real killer is network latency which is a non-negotiable ~2s depending on the index size. There might be a better way to query it with Athena that might speed things along.
 
-
 ![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/indexing-latency.png)
 
-![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/query-latency.png)
-
-
 Lambda memory allocation has a huge impact!
+
+![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/query-latency.png)
 
 ### DocumentSearchFunction:
 - All search indexes are loaded in parallel to improve concurrency
