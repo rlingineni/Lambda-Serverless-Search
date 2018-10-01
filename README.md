@@ -196,15 +196,12 @@ Lambda memory allocation has a huge impact!
 	
 	
 
-
-
 ### Next Steps, Optimizations and Future
 
 - Add pagination for large sets of results
 - might need a temp cache with correleation-id
-- Update to get all S3 Articles via AWS Athena
+- Update to get all S3 Articles and Content via AWS Athena
 - Use Cloudfront with S3 to cache the index document
-- Nightly Batch function to group articles from one day into a large document
 - Add Cache to keep track of most popular results in order to dynamically perform result boosts
 
 
