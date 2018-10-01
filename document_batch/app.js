@@ -10,6 +10,10 @@ exports.lambdaHandler = async (event, context) => {
 
 	//fetch every document uploaded to S3 in articles folder
 	let listOfDocuments = await listObjects(BUCKET_NAME, "articles/");
+	if (listOfDocuments.length <= 5) {
+		console.log("No batching operation needed, too few items");
+		return "No need to batch";
+	}
 	console.log("Got articles list ...");
 	let listOfDocumentPromises = [];
 	for (var documentName of listOfDocuments) {
@@ -31,10 +35,12 @@ exports.lambdaHandler = async (event, context) => {
 	}
 
 	console.log("marked " + AllArticles.length + "articles for deletion");
-
-	//upload a batched document to S3
-	let DocumentName = "batched-" + Date.now();
-	await uploadToS3(BUCKET_NAME, "articles/" + DocumentName + ".json", JSON.stringify(AllArticles));
+	if (AllArticles.length > 0) {
+		//upload a batched document to S3
+		let DocumentName = "batched-" + Date.now();
+		console.log("Batched as " + documentName);
+		await uploadToS3(BUCKET_NAME, "articles/" + DocumentName + ".json", JSON.stringify(AllArticles));
+	}
 };
 
 async function listObjects(Bucket, Prefix) {

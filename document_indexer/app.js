@@ -45,7 +45,7 @@ exports.lambdaHandler = async (event, context) => {
 	let IndexUploadPromiseArray = [];
 	//make indexes and upload them
 	for (var config of IndexConfig.configs) {
-		let ShardSize = config.shards || 2000;
+		let ShardSize = config.shards || 1000;
 		let shardedArray = ShardArray(AllArticles, ShardSize);
 
 		let indexCount = 1;

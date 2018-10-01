@@ -167,7 +167,7 @@ async function SearchForDocument(query, numValues = 25, indexName) {
 	//Load Multiple Indexes from S3
 	try {
 		//Fetch all available shards
-		let listOfShards = await listObjects(BUCKET_NAME, "indexes/" + indexName);
+		let listOfShards = await listObjects(BUCKET_NAME, "indexes/" + indexName + "/");
 		console.log("Received List of Shards...");
 		let listOfDocumentPromises = [];
 		for (var documentName of listOfShards) {
@@ -216,7 +216,7 @@ function GetSearchResults(searchIndex, query, numValues) {
 		this.term(query, { boost: 10, usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING });
 
 		// finally, try a fuzzy search with character 2, without any boost
-		this.term(query, { boost: 5, usePipeline: false, editDistance: 3 });
+		this.term(query, { boost: 5, usePipeline: false, editDistance: 2 });
 	});
 	return results.slice(0, numValues);
 }
@@ -247,7 +247,8 @@ async function listObjects(Bucket, Prefix) {
 			params.ContinuationToken = data.NextContinuationToken;
 		}
 	} catch (e) {
-		throw e;
+		console.log("Listing Objects failed: ", e);
+		return results;
 	}
 
 	return results;
