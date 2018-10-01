@@ -141,15 +141,15 @@ Outputs:
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
 
   DocumentSearchFunction:
-    Description: "Serverless Document API - Search Function ARN"
+    Description: "Search Document API Function ARN"
     Value: !GetAtt DocumentSearchFunction.Arn
 
   DocumentIndexingFunction:
-    Description: "Serverless Document Search - Indexing Function ARN"
+    Description: "Search Document Indexing Function ARN"
     Value: !GetAtt DocumentIndexingFunction.Arn
 
   DocumentBatchingFunction:
-    Description: "Serverless Document Search - Batching Function ARN"
+    Description: "Search Document Batching Function ARN"
     Value: !GetAtt DocumentBatchingFunction.Arn
 
   DocumentCollectionBucket:
