@@ -1,8 +1,8 @@
 const fs = require("fs");
 const alphanumeric = require("alphanumeric-id");
-var rp = require("request-promise");
+var rp = require("promise-request-retry");
 
-let BaseURL = "https://v8mbl4erua.execute-api.us-east-1.amazonaws.com";
+let BaseURL = "https://hbmle8gyoc.execute-api.us-east-1.amazonaws.com";
 
 fs.readFile("../movies.json", function read(err, data) {
 	if (err) {
@@ -57,7 +57,8 @@ async function IncrementBatchAndQueryHelper(
 		uri: BaseURL + "/Prod/add",
 		body: moviesBatch,
 		json: true,
-		resolveWithFullResponse: true
+		resolveWithFullResponse: true,
+		retry: 3
 	};
 
 	try {
@@ -71,18 +72,21 @@ async function IncrementBatchAndQueryHelper(
 	//keep querying and retrying till the index is able to get the the first record ID that was uploaded in the batch
 	RetryTillSuccess(firstMovieID, batchCounter, 50, (responseTime, uploadedID, uploadIndex) => {
 		let percentIndexed = Math.floor((uploadIndex / listOfMovies.length) * 100);
-
-		console.log(
-			"Indexed Article Num:" +
-				uploadIndex +
-				" (~" +
-				percentIndexed +
-				"% uploaded) " +
-				"Response Time (ms): " +
-				responseTime +
-				" For: " +
-				uploadedID
-		);
+		//just to make sure logging as expected
+		if (percentIndexed < 1) {
+			console.log(
+				"Indexed Article Num:" +
+					uploadIndex +
+					" (~" +
+					percentIndexed +
+					"% uploaded) " +
+					"Response Time (ms): " +
+					responseTime +
+					" For: " +
+					uploadedID
+			);
+		}
+		BuildPercentGraph(percentIndexed, responseTime, uploadedID, uploadIndex);
 		indexedCount++;
 	});
 
@@ -108,9 +112,11 @@ async function _RetryTillSuccess(targetID, processId, responseTime, retryCounter
 		time: true
 	};
 
+	let endingTime; //so that the catch block can see this also
 	try {
 		let response = await rp(options);
 		let timings = response.request.timings;
+		let endingTime = timings.end;
 		let searchResults = JSON.parse(response.body);
 		//check if response has the correct index
 		if (searchResults.length > 0 && targetID === searchResults[0].ref) {
@@ -119,7 +125,45 @@ async function _RetryTillSuccess(targetID, processId, responseTime, retryCounter
 			_RetryTillSuccess(targetID, processId, responseTime + timings.end, retryCounter + 1, retryMax, callback);
 		}
 	} catch (e) {
-		console.log("Request or error occured for " + processId);
-		_RetryTillSuccess(targetID, processId, responseTime + timings.end, retryCounter + 1, retryMax, callback);
+		//console.log("Request or error occured for " + processId + " " + targetID);
+		_RetryTillSuccess(targetID, processId, responseTime + endingTime, retryCounter + 1, retryMax, callback);
+	}
+}
+
+let PercentGraph = {};
+function BuildPercentGraph(percentIndexed, responseTime, idAdded, uploadIndex) {
+	previousIndex = (percentIndexed - 1).toString();
+	percentIndexed = percentIndexed.toString();
+	if (parseFloat(responseTime)) {
+		responseTime = parseFloat(responseTime);
+	} else {
+		responseTime = 1000;
+	}
+
+	if (PercentGraph[percentIndexed]) {
+		PercentGraph[percentIndexed].count = PercentGraph[percentIndexed].count + 1;
+		PercentGraph[percentIndexed].ids.push(idAdded);
+		PercentGraph[percentIndexed].totalTime = PercentGraph[percentIndexed].totalTime + responseTime;
+		let average = PercentGraph[percentIndexed].totalTime / PercentGraph[percentIndexed].count;
+		PercentGraph[percentIndexed].avg = average;
+	} else {
+		PercentGraph[percentIndexed] = {
+			count: 1,
+			totalTime: responseTime,
+			avg: responseTime,
+			ids: [idAdded]
+		};
+
+		if (PercentGraph[previousIndex]) {
+			console.log(
+				previousIndex +
+					"% complete and ~" +
+					uploadIndex +
+					" records indexed at an avg of " +
+					PercentGraph[previousIndex].avg +
+					" Ids: " +
+					PercentGraph[previousIndex].ids.slice(0, 8)
+			);
+		}
 	}
 }
