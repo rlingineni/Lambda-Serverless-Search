@@ -6,7 +6,7 @@ Parameters:
   TargetBucket:
     Description: Name of S3 bucket to create where search articles should be uploaded (remember s3 bucket names are only lowercase)
     Type: String
-  InternalAPIKey: 
+  InternalAPIKey:
     Type: String
     Default: supersecretkey
     Description: Internal API Key that you will use when making requests to update the search index configuration
@@ -28,25 +28,8 @@ Resources:
           BUCKET_NAME: !Ref TargetBucket
           INTERNAL_API_KEY: !Ref InternalAPIKey
       Policies:
-        - Statement:
-            - Action:
-                - s3:GetObject
-                - s3:ListBucket
-                - s3:GetBucketLocation
-                - s3:GetObjectVersion
-                - s3:PutObject
-                - s3:GetLifecycleConfiguration
-                - s3:PutLifecycleConfiguration
-              Resource:
-                - Fn::Sub:
-                    - arn:${AWS::Partition}:s3:::${bucketName}
-                    - bucketName:
-                        Ref: TargetBucket
-                - Fn::Sub:
-                    - arn:${AWS::Partition}:s3:::${bucketName}/*
-                    - bucketName:
-                        Ref: TargetBucket
-              Effect: Allow
+        - S3CrudPolicy:
+            BucketName: !Ref TargetBucket
       Events:
         DocumentSearch:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -69,73 +52,39 @@ Resources:
       CodeUri: document_indexer
       Handler: app.lambdaHandler
       Runtime: nodejs8.10
-      Policies: AWSLambdaExecute
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           BUCKET_NAME: !Ref TargetBucket
       Policies:
-      - Statement:
-          - Action:
-              - s3:GetObject
-              - s3:ListBucket
-              - s3:PutObject
-              - s3:GetLifecycleConfiguration
-              - s3:PutLifecycleConfiguration
-            Resource:
-              - Fn::Sub:
-                  - arn:${AWS::Partition}:s3:::${bucketName}
-                  - bucketName:
-                      Ref: TargetBucket
-              - Fn::Sub:
-                  - arn:${AWS::Partition}:s3:::${bucketName}/*
-                  - bucketName:
-                      Ref: TargetBucket
-            Effect: Allow
+        - S3CrudPolicy:
+            BucketName: !Ref TargetBucket
       Events:
         DocumentAddedEvent:
-         Type: S3
-         Properties:
-           Bucket: !Ref SearchDocumentsBucket
-           Events: s3:ObjectCreated:*
+          Type: S3
+          Properties:
+            Bucket: !Ref SearchDocumentsBucket
+            Events: s3:ObjectCreated:*
   DocumentBatchingFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: document_batch
       Handler: app.lambdaHandler
       Runtime: nodejs8.10
-      Policies: AWSLambdaExecute
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           BUCKET_NAME: !Ref TargetBucket
       Policies:
-      - Statement:
-          - Action:
-              - s3:GetObject
-              - s3:ListBucket
-              - s3:PutObject
-              - s3:DeleteObject
-              - s3:GetLifecycleConfiguration
-              - s3:PutLifecycleConfiguration
-            Resource:
-              - Fn::Sub:
-                  - arn:${AWS::Partition}:s3:::${bucketName}
-                  - bucketName:
-                      Ref: TargetBucket
-              - Fn::Sub:
-                  - arn:${AWS::Partition}:s3:::${bucketName}/*
-                  - bucketName:
-                      Ref: TargetBucket
-            Effect: Allow
+        - S3CrudPolicy:
+            BucketName: !Ref TargetBucket
       Events:
         DocumentBatchEvent:
-         Type: Schedule
-         Properties:
-           Schedule: rate(5 minutes)        
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
   SearchDocumentsBucket:
     Type: "AWS::S3::Bucket"
     Properties:
       BucketName: !Ref TargetBucket
-
 
 Outputs:
   DocumentSearchApi:
@@ -157,5 +106,3 @@ Outputs:
   DocumentCollectionBucket:
     Description: "S3 Bucket for all uploaded documents and indexing information"
     Value: !Ref TargetBucket
-
- 
