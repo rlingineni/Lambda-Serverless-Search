@@ -8,7 +8,6 @@ The search algorithm powering the system is [lunrjs](http://lunrjs.com).
 Remember, this is a poorman's elastic search. 
 
 - Great for exposing search for sets of new data and existing data
-- Can be used to perform autocompletes
 - Use as a lite api before migrating to a full scale search solution
 - More documents can mean slower performance - how much? Below I've noted my [performance](#performance) observations
 - AWS Lambda Memory requirements might need to be updated as per dataset
@@ -21,7 +20,7 @@ Remember, this is a poorman's elastic search.
 
 ## Getting Started
 
-You may head over to the [Serverless Application Repository](sss) and deploy the service.
+You may head over to the [Serverless Application Repository](https://aws.amazon.com/serverless) and deploy the service.
 
 You will have to provide two parameters when you deploy:
 
@@ -32,7 +31,7 @@ You will have to provide two parameters when you deploy:
 
 You may test the API in postman. Be sure to update the BaseURL. Read below for route docs and design.
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/c050def4904367e08d45)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/1e7621630073333b2697)
 
 After deploying here are somethings you might want to:
 - Change the default internal API key
@@ -180,9 +179,13 @@ Return the schema that is being used to index the documents
 
 -------------------
 ## Performance 
-Here are some notes on performance that I have studied:
+Here are some graphs on performance that I have done. It's not going to win any races, or even come close to algolia or elasticsearch. The real killer is network latency which is a non-negotiable ~2s depending on the index size. There might be a better way to query it with Athena that might speed things along.
+
+![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/indexing-latency.png)
 
 Lambda memory allocation has a huge impact!
+
+![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/query-latency.png)
 
 ### DocumentSearchFunction:
 - All search indexes are loaded in parallel to improve concurrency
