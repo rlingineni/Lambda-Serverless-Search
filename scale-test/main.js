@@ -164,6 +164,7 @@ function BuildPercentGraph(percentIndexed, responseTime, idAdded, uploadIndex) {
 					" Ids: " +
 					PercentGraph[previousIndex].ids.slice(0, 8)
 			);
+			console.log(PercentGraph);
 		}
 	}
 }
