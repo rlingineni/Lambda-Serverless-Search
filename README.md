@@ -31,7 +31,7 @@ You will have to provide two parameters when you deploy:
 
 You may test the API in postman. Be sure to update the BaseURL. Read below for route docs and design.
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/c050def4904367e08d45)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/1e7621630073333b2697)
 
 After deploying here are somethings you might want to:
 - Change the default internal API key
