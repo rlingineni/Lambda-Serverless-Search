@@ -1,6 +1,7 @@
 const lunr = require("lunr");
 const fs = require("fs");
 const AWS = require("aws-sdk");
+const AWSHelper = require("aws-functions");
 const s3 = new AWS.S3();
 let Validator = require("jsonschema").Validator;
 let v = new Validator();
@@ -59,41 +60,41 @@ exports.lambdaHandler = async (event, context) => {
 
 	let path = event.path;
 	let method = event.httpMethod;
-
-	switch (path) {
-		case "/search":
-			let query = event.queryStringParameters.q;
-			let count = event.queryStringParameters.count || 25;
-			let index = event.queryStringParameters.index;
-			return await SearchForDocument(query, count, index);
-		case "/add":
-			switch (event.httpMethod) {
-				case "POST":
-					let document = JSON.parse(event.body);
-					return await UploadArticle(document);
-			}
-		case "/internal/config":
-			switch (event.httpMethod) {
-				case "POST":
-					let config = JSON.parse(event.body);
-					return await UpdateConfigDocument(config);
-				case "GET":
-					return await GetConfigDocument();
-			}
-		default:
-			return BuildResponse(400, "Not a valid path, or you don't have access to it", false);
+	try {
+		switch (path) {
+			case "/search":
+				let query = event.queryStringParameters.q;
+				let count = event.queryStringParameters.count || 25;
+				let index = event.queryStringParameters.index;
+				return await SearchForDocument(query, count, index);
+			case "/add":
+				switch (event.httpMethod) {
+					case "POST":
+						let document = JSON.parse(event.body);
+						return await UploadArticle(document);
+				}
+			case "/internal/config":
+				switch (event.httpMethod) {
+					case "POST":
+						let config = JSON.parse(event.body);
+						return await UpdateConfigDocument(config);
+					case "GET":
+						return await GetConfigDocument();
+				}
+			default:
+				return BuildResponse(400, "Not a valid path, or you don't have access to it", false);
+		}
+	} catch (e) {
+		console.log("ERROR", e);
+		return BuildResponse(500, "An unexpected error occured");
 	}
 };
 
 async function GetConfigDocument() {
 	//fetch previous cache of documents
 	try {
-		var params = {
-			Bucket: BUCKET_NAME,
-			Key: "search_config.json"
-		};
-		let data = await s3.getObject(params).promise();
-		return BuildResponse(200, JSON.parse(data.Body), true);
+		let configs = await AWSHelper.getJSONFile(BUCKET_NAME, "search_config.json");
+		return BuildResponse(200, configs, true);
 	} catch (err) {
 		console.log(err.message);
 		console.log("Search Config does not exist!");
@@ -125,13 +126,8 @@ async function UpdateConfigDocument(SearchConfig) {
 	}
 
 	//add to S3 Bucket
-	var params = {
-		Bucket: BUCKET_NAME,
-		Key: "search_config.json",
-		Body: JSON.stringify(SearchConfig)
-	};
 	try {
-		await s3.putObject(params).promise();
+		await AWSHelper.uploadToS3(BUCKET_NAME, "search_config.json", JSON.stringify(SearchConfig));
 		console.log("Uploaded search configuration for: " + index.name);
 		return BuildResponse(200, "Index Config Updated");
 	} catch (err) {
@@ -147,6 +143,7 @@ async function UploadArticle(document) {
 		Key: "articles/" + Date.now() + ".json",
 		Body: JSON.stringify(document)
 	};
+
 	try {
 		await s3.putObject(params).promise();
 		return BuildResponse(200, "Article Added");
@@ -167,11 +164,11 @@ async function SearchForDocument(query, numValues = 25, indexName) {
 	//Load Multiple Indexes from S3
 	try {
 		//Fetch all available shards
-		let listOfShards = await listObjects(BUCKET_NAME, "indexes/" + indexName + "/");
+		let listOfShards = await AWSHelper.listObjects(BUCKET_NAME, "indexes/" + indexName + "/");
 		console.log("Received List of Shards...");
 		let listOfDocumentPromises = [];
 		for (var documentName of listOfShards) {
-			listOfDocumentPromises.push(getIndexJSONFile(BUCKET_NAME, documentName));
+			listOfDocumentPromises.push(AWSHelper.getJSONFile(BUCKET_NAME, documentName));
 		}
 
 		try {
@@ -221,39 +218,6 @@ function GetSearchResults(searchIndex, query, numValues) {
 	return results.slice(0, numValues);
 }
 
-/**
- * @param {*} Bucket
- * @param {*} Prefix
- * Return array of all the objects in Bucket or Sub-Path in Bucket
- */
-async function listObjects(Bucket, Prefix) {
-	let params = {
-		Bucket,
-		Prefix,
-		MaxKeys: 1000
-	};
-
-	let results = [];
-	let isTruncated = true;
-
-	try {
-		while (isTruncated) {
-			//fetch list of all incoming folders
-			let data = await s3.listObjectsV2(params).promise();
-			isTruncated = data.IsTruncated;
-			for (let item of data.Contents) {
-				results.push(item.Key);
-			}
-			params.ContinuationToken = data.NextContinuationToken;
-		}
-	} catch (e) {
-		console.log("Listing Objects failed: ", e);
-		return results;
-	}
-
-	return results;
-}
-
 function BuildResponse(statusCode, responseBody, shouldStringify = false) {
 	let body = "invalid response";
 	if (shouldStringify) {
@@ -277,20 +241,4 @@ function isValidIndexName(str) {
 	}
 
 	return false;
-}
-
-async function getIndexJSONFile(Bucket, Key, query, numValues) {
-	//fetch previous cache of documents
-	try {
-		var params = {
-			Bucket,
-			Key
-		};
-		let data = await s3.getObject(params).promise();
-		return JSON.parse(data.Body);
-	} catch (err) {
-		console.log(err.message);
-		console.log("Object does not exist...for ", Key);
-		return null;
-	}
 }

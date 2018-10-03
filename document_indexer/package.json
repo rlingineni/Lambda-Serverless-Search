@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-functions": "^1.0.2",
     "lunr": "^2.3.3"
   }
 }
