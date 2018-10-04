@@ -83,10 +83,6 @@ Creates an Index(s) for the articles. You may update this whenever you want to.
 		{	"name":"movies-autocomplete",
 			"fields":["title","year","director","year","genre","tldr"],
 			"ref": "title"
-		},
-		{	"name":"actors",
-			"fields":["name","age","birthplace","alma mater"],
-			"ref": "id"
 		}
 	]
 	
