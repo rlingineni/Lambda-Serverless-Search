@@ -97,8 +97,7 @@ Creates an Index(s) for the articles. You may update this whenever you want to.
 -------------------
 
 ### POST /add
-Adds a new article to search
-`prefix` - prefix may be added to store the data in a different location than `articles`. This is ideal for seperate indexes, or it may be omitted
+Adds a new article to search, you may upload either an array, or a single object
 ##### Input
 ```javascript
  [
@@ -198,7 +197,7 @@ Lambda memory allocation has a huge impact!
 ### Next Steps, Optimizations and Future
 
 - Add pagination for large sets of results
-- might need a temp cache with correleation-id
+- Upload Index directly to the Lambda Function (this would radically improve performance)
 - Update to get all S3 Articles and Content via AWS Athena
 - Use Cloudfront with S3 to cache the index document
 - Add Cache to keep track of most popular results in order to dynamically perform result boosts
