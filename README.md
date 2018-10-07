@@ -135,9 +135,9 @@ Searches all the articles
 ##### Input
 | query parameters |required|  definition | Example| 
 | ------------- | ------------- |---------|------|
-| `q`  |yes |query string to be searched  | `/Prod/search?q=titan&index=ids` |
-| `index`  | yes|index to be used | `/Prod/search?q=get&index=autocomplete` |
-| `count`  | no|count of search result to return. **Default:** 25 | `/Prod/search?q=get&index=autocomplete&count=50` |
+| `q`  |yes |query string to be searched  | `/Prod/search?q=titan&index=movies` |
+| `index`  | yes|index to be used | `/Prod/search?q=get&index=movies` |
+| `count`  | no|count of search result to return. **Default:** 25 | `/Prod/search?q=get&index=movies&count=50` |
 
 Both parameters are required.
 
