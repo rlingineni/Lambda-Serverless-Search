@@ -25,7 +25,7 @@ Remember, this is a poorman's elastic search.
 
 ## Getting Started
 
-You may head over to the [Serverless Application Repository](https://serverlessrepo.aws.amazon.com/#/applications/arn:aws:serverlessrepo:us-east-1:939884077921:applications~ServerlessSearch) and deploy the service.
+You may head over to the [Serverless Application Repository](https://serverlessrepo.aws.amazon.com/#/applications/arn:aws:serverlessrepo:us-east-1:939884077921:applications~serverless-search) and deploy the service.
 
 You will have to provide two parameters when you deploy:
 
