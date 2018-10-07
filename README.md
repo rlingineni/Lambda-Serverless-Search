@@ -8,6 +8,7 @@ The search algorithm powering the system is [lunrjs](http://lunrjs.com).
 Remember, this is a poorman's elastic search. 
 
 - Great for exposing search for sets of new data and existing data
+- You only get the index id, not the entire document
 - Use as a lite api before migrating to a full scale search solution
 - More documents can mean slower performance - how much? Below I've noted my [performance](#performance) observations
 - AWS Lambda Memory requirements might need to be updated as per dataset
