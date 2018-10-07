@@ -67,7 +67,7 @@ Creates an Index(s) for the articles. You may update this whenever you want to.
 | `fields`  | Array of strings with the name of attributes that are to be indexed in document| `yes`|
 | `name`  | The name of the index| `yes`|
 | `ref`  | The ref is one field that will be returned. Most people use an ID, that they can later lookup in a DB or other store|`yes`|
-| `shards`  |An "index" is broken up into smaller indexes. Depending on the size of each article, you may tune this number. An indexes by default is sharded at 2000 shards |`no`|
+| `shards`  |This value sets the number of records per index. If individual documents are large in size, then you want smaller shards. By default, an index is sharded at 2000 shards |`no`|
 
 ##### Input
 ```javascript
@@ -80,7 +80,7 @@ Creates an Index(s) for the articles. You may update this whenever you want to.
 			"ref": "id",
 			"shards": 1000
 		},
-		{	"name":"movies-autocomplete",
+		{	"name":"movies-title",
 			"fields":["title","year","director","year","genre","tldr"],
 			"ref": "title"
 		}
