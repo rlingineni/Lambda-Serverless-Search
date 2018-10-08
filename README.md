@@ -19,10 +19,6 @@ Remember, this is a poorman's elastic search.
 - Lambda (256mb)
 - API Gateway
 
-### Design
-
-![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/imgs/Architecture.png)
-
 ## Getting Started
 
 You may head over to the [Serverless Application Repository](https://serverlessrepo.aws.amazon.com/#/applications/arn:aws:serverlessrepo:us-east-1:939884077921:applications~serverless-search) and deploy the service.
@@ -43,6 +39,9 @@ After deploying here are somethings you might want to:
 - Add Auth to your routes to restrict access
 
 
+### Design
+
+![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/imgs/Architecture.png)
 
 ## API Routes
 
