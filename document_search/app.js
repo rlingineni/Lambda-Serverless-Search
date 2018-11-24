@@ -86,7 +86,7 @@ exports.lambdaHandler = async (event, context) => {
 		}
 	} catch (e) {
 		console.log("ERROR", e);
-		return BuildResponse(500, "An unexpected error occured");
+		return BuildResponse(500, "An unexpected error occured, please check your input or search logs");
 	}
 };
 
