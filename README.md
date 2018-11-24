@@ -19,13 +19,9 @@ Remember, this is a poorman's elastic search.
 - Lambda (256mb)
 - API Gateway
 
-### Design
-
-![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/imgs/Architecture.png)
-
 ## Getting Started
 
-You may head over to the [Serverless Application Repository](https://serverlessrepo.aws.amazon.com/#/applications/arn:aws:serverlessrepo:us-east-1:939884077921:applications~ServerlessSearch) and deploy the service.
+You may head over to the [Serverless Application Repository](https://serverlessrepo.aws.amazon.com/#/applications/arn:aws:serverlessrepo:us-east-1:939884077921:applications~serverless-search) and deploy the service.
 
 You will have to provide two parameters when you deploy:
 
@@ -43,6 +39,9 @@ After deploying here are somethings you might want to:
 - Add Auth to your routes to restrict access
 
 
+### Design
+
+![alt text](https://github.com/rlingineni/Lambda-Serverless-Search/blob/master/imgs/Architecture.png)
 
 ## API Routes
 
@@ -135,9 +134,9 @@ Searches all the articles
 ##### Input
 | query parameters |required|  definition | Example| 
 | ------------- | ------------- |---------|------|
-| `q`  |yes |query string to be searched  | `/Prod/search?q=titan&index=ids` |
-| `index`  | yes|index to be used | `/Prod/search?q=get&index=autocomplete` |
-| `count`  | no|count of search result to return. **Default:** 25 | `/Prod/search?q=get&index=autocomplete&count=50` |
+| `q`  |yes |query string to be searched  | `/Prod/search?q=titan&index=movies` |
+| `index`  | yes|index to be used | `/Prod/search?q=get&index=movies` |
+| `count`  | no|count of search result to return. **Default:** 25 | `/Prod/search?q=get&index=movies&count=50` |
 
 Both parameters are required.
 
